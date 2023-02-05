@@ -1,99 +1,29 @@
 body {
-    background-color: rgb(20,20,20);
-    text-align: center;
-    font-family: 'Piazzolla', serif;
-    color: white;
-    font-size: 20px;
-}
-
-h4 {
-    font-size: 16px;
-    margin: 0;
-}
-
-label {
-    font-family: 'Piazzolla', serif;
-    font-weight: bolder;
-    font-size: 25px;
+    background-color: rgb(20, 20, 20);
+    font-family     : 'Piazzolla', serif;
+    color           : white;
 }
 
 .picpok {
-    width:  150px;
-    height: 150px;
-    object-fit: cover;
+    max-width   : 150px;
+    aspect-ratio: 1;
+    object-fit  : cover;
 }
 
 .picpokShiny {
-    width:  288px;
-    height: 288px;
+    width     : 288px;
+    height    : 288px;
     object-fit: cover;
 }
 
 .pictype {
-    width: 89px;
+    width : 89px;
     height: 39px;
 }
 
-.button {
-    margin: 0px;
-    font-size: 20px;
-}
-
-h1 {
-    margin:0;
-}
-
-h2 {
-    font-weight: 400;
-    margin: 0;
-    padding-bottom: 14px;
-    height: 20px;
-}
-
-h3 {
-    margin: 0;
-    font-size: 15px;
-    font-weight: 0;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-}
-
 .shinies {
-    display: grid;
+    display              : grid;
     grid-template-columns: repeat(4, 1fr);
-}
-
-#FP1 {
-    padding-bottom:4px;
-}
-
-#FP2 {
-    padding-bottom:4px;
-}
-
-#R2 {
-    height: 30px;
-}
-
-#L2 {
-    height: 30px;
-}
-
-#bottom {
-    font-family: 'Arial', serif;
-    font-size: 12px;
-    position: absolute; 
-    bottom: 0; 
-    left: 0; 
-    width: 100%; 
-    text-align: center
-}
-
-.monstats {
-    padding-bottom: 2px;
 }
 
 .montotal {
@@ -109,9 +39,123 @@ h3 {
     padding-bottom: 4px;
 }
 
-.monweak img {
-    width: 52px;
-    height: 22px;
+a:link {
+    color           : rgb(30, 130, 230);
+    background-color: transparent;
+    text-decoration : underline;
+}
+
+a:visited {
+    color           : darkorchid;
+    background-color: transparent;
+}
+
+a:active {
+    color           : darkorchid;
+    background-color: transparent;
+    text-decoration : dashed;
+}
+
+/* ============================== */
+/* ========= COMPOSITION ======== */
+/* ============================== */
+.main-wrapper {
+    display  : flex;
+    flex-flow: row nowrap;
+    gap      : 1rem;
+    padding  : 1rem;
+
+    max-width    : 1000px;
+    margin-inline: auto;
+}
+
+.aside-wrapper {
+    display  : flex;
+    flex-flow: column wrap;
+    gap      : 1rem;
+
+    flex: 1 1 25%;
+}
+
+.aside-wrapper .notice {
+    padding      : 1rem;
+    border-radius: 7px;
+    background   : rgb(37, 39, 41);
+    box-shadow   : 0px 0px 25px rgba(44, 44, 44, 0.2);
+
+    order: 99;
+}
+
+.aside-wrapper .notice>*+* {
+    margin-top: 1rem;
+}
+
+.fusion-wrapper {
+    display  : flex;
+    flex-flow: column nowrap;
+    gap      : 1rem;
+
+    flex: 1 1 75%;
+}
+
+.input-wrapper {
+    display  : flex;
+    flex-flow: column nowrap;
+    gap      : 1rem;
+
+    align-items    : center;
+    justify-content: center;
+}
+
+.input-wrapper .input-item {
+    text-align: center;
+}
+
+.input-wrapper .input-item>*+* {
+    margin-top: 0.5rem;
+}
+
+.button-wrapper {
+    display  : flex;
+    flex-flow: column nowrap;
+    gap      : 0.5rem;
+}
+
+.result-wrapper {
+    display              : grid;
+    grid-template-columns: repeat(2, 1fr);
+    width                : 100%;
+}
+
+.pokemon-item>*+* {
+    margin-top: 0.5rem;
+}
+
+.monstats-wrapper,
+.monother-wrapper,
+.monweak-wrapper {
+    display  : flex;
+    flex-flow: column nowrap;
+    gap      : 0;
+}
+
+#L2,
+#R2 {
+    flex      : 1 1 50%;
+    text-align: center;
+}
+
+/* ============================== */
+/* ========== UTILITIES  ======== */
+/* ============================== */
+.h1-title {
+    text-align    : center;
+    text-transform: uppercase;
+}
+
+.italic {
+    font-style: italic;
+    ;
 }
 
 .green-text {
@@ -122,19 +166,57 @@ h3 {
     color: red;
 }
 
-a:link {
-    color:rgb(30,130,230);
-    background-color: transparent;
-    text-decoration: underline;
-  }
-  
-  a:visited {
-    color:darkorchid;
-    background-color: transparent;
-  }
-  
-  a:active {
-    color:darkorchid;
-    background-color: transparent;
-    text-decoration: dashed;
-  }
+.monweak img {
+    max-width: 52px;
+    height   : auto;
+}
+
+label {
+    font-weight: 900;
+    font-size  : 1.6rem;
+}
+
+input,
+button {
+    padding      : 0.7rem;
+    border-radius: 3px;
+
+    transition: background-color ease 0.2s;
+}
+
+input[type="button"]:is(:hover) {
+    background-color: rgb(196, 196, 196);
+}
+
+/* Unused style */
+#bottom {
+    font-family: 'Arial', serif;
+    font-size  : 12px;
+    position   : absolute;
+    bottom     : 0;
+    left       : 0;
+    width      : 100%;
+    text-align : center
+}
+
+/* ============================== */
+/* ======= MEDIA QUERIES ======== */
+/* ============================== */
+
+/* MOBILE STYLES */
+@media only screen and (max-width: 452px) {
+    .main-wrapper {
+        flex-flow: column nowrap;
+    }
+
+    .input-wrapper {
+        flex-flow: column nowrap;
+    }
+
+    .aside-wrapper .notice {
+        order: -99;
+    }
+}
+
+/* DESKTOP  STYLES */
+@media only screen and (min-width: 453px) {}
