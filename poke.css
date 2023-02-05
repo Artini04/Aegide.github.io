@@ -1,59 +1,15 @@
+:root {
+    --font-color   : white;
+    --bg-color     : rgb(20, 20, 20);
+    --wrapper-color: rgb(37, 39, 41);
+    --input-color  : rgb(55, 62, 70);
+    --bor-rad      : 7px;
+}
+
 body {
-    background-color: rgb(20, 20, 20);
+    background-color: var(--bg-color);
     font-family     : 'Piazzolla', serif;
-    color           : white;
-}
-
-.picpok {
-    max-width   : 150px;
-    aspect-ratio: 1;
-    object-fit  : cover;
-}
-
-.picpokShiny {
-    width     : 288px;
-    height    : 288px;
-    object-fit: cover;
-}
-
-.pictype {
-    width : 89px;
-    height: 39px;
-}
-
-.shinies {
-    display              : grid;
-    grid-template-columns: repeat(4, 1fr);
-}
-
-.montotal {
-    padding-bottom: 10px;
-}
-
-.monab {
-    padding-bottom: 8px;
-}
-
-.monweak {
-    vertical-align: auto;
-    padding-bottom: 4px;
-}
-
-a:link {
-    color           : rgb(30, 130, 230);
-    background-color: transparent;
-    text-decoration : underline;
-}
-
-a:visited {
-    color           : darkorchid;
-    background-color: transparent;
-}
-
-a:active {
-    color           : darkorchid;
-    background-color: transparent;
-    text-decoration : dashed;
+    color           : var(--font-color);
 }
 
 /* ============================== */
@@ -65,7 +21,7 @@ a:active {
     gap      : 1rem;
     padding  : 1rem;
 
-    max-width    : 1000px;
+    max-width    : 1200px;
     margin-inline: auto;
 }
 
@@ -80,10 +36,7 @@ a:active {
 .aside-wrapper .notice {
     padding      : 1rem;
     border-radius: 7px;
-    background   : rgb(37, 39, 41);
-    box-shadow   : 0px 0px 25px rgba(44, 44, 44, 0.2);
-
-    order: 99;
+    background   : var(--wrapper-color);
 }
 
 .aside-wrapper .notice>*+* {
@@ -98,17 +51,29 @@ a:active {
     flex: 1 1 75%;
 }
 
-.input-wrapper {
-    display  : flex;
-    flex-flow: column nowrap;
-    gap      : 1rem;
-
-    align-items    : center;
-    justify-content: center;
+.control-wrapper {
+    display      : flex;
+    flex-flow    : column wrap;
+    gap          : 2rem;
+    padding      : 1rem;
+    background   : var(--wrapper-color);
+    border-radius: var(--bor-rad);
+    order        : -99;
 }
 
-.input-wrapper .input-item {
-    text-align: center;
+.shinies {
+    display              : grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.input-wrapper {
+    display  : flex;
+    flex-flow: row nowrap;
+    gap      : 0.5rem;
+}
+
+.input-wrapper .input-item * {
+    display: block;
 }
 
 .input-wrapper .input-item>*+* {
@@ -117,14 +82,22 @@ a:active {
 
 .button-wrapper {
     display  : flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     gap      : 0.5rem;
+}
+
+.button-wrapper * {
+    flex: 1 1 100px;
 }
 
 .result-wrapper {
     display              : grid;
     grid-template-columns: repeat(2, 1fr);
-    width                : 100%;
+    flex                 : 1 1 60%;
+}
+
+.result-wrapper>* {
+    text-align: center;
 }
 
 .pokemon-item>*+* {
@@ -139,10 +112,8 @@ a:active {
     gap      : 0;
 }
 
-#L2,
-#R2 {
-    flex      : 1 1 50%;
-    text-align: center;
+.monweak-wrapper {
+    gap: 0.5rem;
 }
 
 /* ============================== */
@@ -153,9 +124,18 @@ a:active {
     text-transform: uppercase;
 }
 
+.no-dec {
+    text-decoration: none !important;
+    color          : inherit !important;
+}
+
 .italic {
     font-style: italic;
     ;
+}
+
+.input-wrapper input {
+    width: 100%;
 }
 
 .green-text {
@@ -166,6 +146,21 @@ a:active {
     color: red;
 }
 
+.picpok {
+    width : 150px;
+    height: 150px;
+}
+
+.picpokShiny {
+    width : 288px;
+    height: 288px;
+}
+
+.pictype {
+    width : 89px;
+    height: 39px;
+}
+
 .monweak img {
     max-width: 52px;
     height   : auto;
@@ -173,19 +168,42 @@ a:active {
 
 label {
     font-weight: 900;
-    font-size  : 1.6rem;
+    font-size  : 1.4rem;
 }
 
 input,
 button {
+    color        : inherit;
     padding      : 0.7rem;
+    background   : var(--input-color);
+    transition   : background-color ease 0.2s;
     border-radius: 3px;
-
-    transition: background-color ease 0.2s;
 }
 
-input[type="button"]:is(:hover) {
-    background-color: rgb(196, 196, 196);
+input::placeholder {
+    color: rgb(155, 155, 155);
+}
+
+input[type="button"] {
+    cursor: pointer;
+}
+
+input[type="image"] {
+    background: transparent;
+}
+
+a:link {
+    color           : rgb(30, 130, 230);
+    background-color: transparent;
+    text-decoration : underline;
+}
+
+a:is(:visited, :active) {
+    color: darkorchid;
+}
+
+a:active {
+    text-decoration: dashed;
 }
 
 /* Unused style */
@@ -204,19 +222,32 @@ input[type="button"]:is(:hover) {
 /* ============================== */
 
 /* MOBILE STYLES */
-@media only screen and (max-width: 452px) {
+@media only screen and (max-width: 768px) {
+    body {
+        font-size: 18px;
+    }
+
     .main-wrapper {
         flex-flow: column nowrap;
+    }
+
+    .aside-wrapper .notice {
+        padding: 1.5rem;
+    }
+
+    .aside-wrapper .control-wrapper {
+        order: 99;
     }
 
     .input-wrapper {
         flex-flow: column nowrap;
     }
 
-    .aside-wrapper .notice {
-        order: -99;
+    .button-wrapper {
+        flex-flow: column nowrap;
+    }
+
+    .button-wrapper * {
+        flex: 1 1 10px;
     }
 }
-
-/* DESKTOP  STYLES */
-@media only screen and (min-width: 453px) {}

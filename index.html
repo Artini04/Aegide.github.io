@@ -11,7 +11,6 @@
 	</head>
 	<body>
 		<h1 class="h1-title">Infinite Fusion Calculator</h1>
-
 		<main class="main-wrapper">
 			<div class="aside-wrapper">
 				<div class="notice">
@@ -29,24 +28,26 @@
 					<p>They were extracted and <a href="https://github.com/Aegide/autogen-fusion-sprites/commits/master/Battlers">fixed</a> by <a href="https://github.com/Aegide">Aegide</a>.</p>
 				</div>
 
-				<div class="input-wrapper">
-					<div id="t1" class="input-item">
-						<label for="fname1">First Pokémon:</label>
-						<input list="dlPkmn" type="text" id="fname1" name="fname1" value="" autocomplete="off" />
-						<input type="button" id="random1" value="Randomize" onclick="randomFirstPoke()" />
+				<div class="control-wrapper">
+					<div class="input-wrapper">
+						<div id="t1" class="input-item">
+							<label for="fname1">First Pokémon:</label>
+							<input list="dlPkmn" type="text" id="fname1" name="fname1" value="" autocomplete="off" placeholder="Type here..." />
+							<input type="button" id="random1" value="Randomize #1" onclick="randomFirstPoke()" />
+						</div>
+
+						<div id="t2" class="input-item">
+							<label for="fname2">Second Pokémon:</label>
+							<input list="dlPkmn" type="text" id="fname2" name="fname2" value="" autocomplete="off" placeholder="Type here..." />
+							<input type="button" id="random2" value="Randomize #2" onclick="randomSecondPoke()" />
+						</div>
 					</div>
 
-					<div id="t2" class="input-item">
-						<label for="fname2">Second Pokémon:</label>
-						<input list="dlPkmn" type="text" id="fname2" name="fname2" value="" autocomplete="off" />
-						<input type="button" id="random2" value="Randomize" onclick="randomSecondPoke()" />
+					<div class="button-wrapper">
+						<input type="button" id="random" value="Random" onclick="randomBothPoke()" />
+						<input type="button" id="reset" value="Reset" onclick="resetPoke()" />
+						<input type="button" id="button" value="Fuse" onclick="fusePoke()" />
 					</div>
-				</div>
-
-				<div class="button-wrapper">
-					<input type="button" id="random" value="Random" onclick="randomBothPoke()" />
-					<input type="button" id="reset" value="Reset" onclick="resetPoke()" />
-					<input type="button" id="button" value="Fuse" onclick="fusePoke()" />
 				</div>
 			</div>
 
@@ -56,7 +57,7 @@
 						<div class="dex-wrapper"><span id="dexnumber1"></span><span id="fusionid1"></span></div>
 
 						<img class="picpok" id="pic1" alt="" src="question.png" />
-						<div id="FP1">mon1/mon2</div>
+						<div id="FP1" class="fusion-name">mon1/mon2</div>
 
 						<div id="typecont">
 							<img class="pictype" id="p1" src="types/unknown.png" />
@@ -91,7 +92,7 @@
 					<div id="R2" class="pokemon-item">
 						<div class="dex-wrapper"><span id="dexnumber2"></span><span id="fusionid2"></span></div>
 						<img class="picpok" id="pic2" alt="" src="question.png" />
-						<div id="FP2">mon2/mon1</div>
+						<div id="FP2" class="fusion-name">mon2/mon1</div>
 
 						<div id="typecont">
 							<img class="pictype" id="p3" src="types/unknown.png" />
