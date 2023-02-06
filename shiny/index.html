@@ -1,71 +1,80 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <title>Infinite Fusion Calculator</title>
-        <link rel="stylesheet" href="../poke.css">
-        <link href="https://fonts.googleapis.com/css2?family=Piazzolla:wght@500;600;700&display=swap" rel="stylesheet">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>    
-    </head>
-<body>    
-    <h1><a href="../index.html" style="text-decoration:none; color:white">Infinite Fusion Calculator</a></h1>
-    <h2>Shiny preview</h2>
-    <div id="text">
-        <h4>
-            <br>
-            Only works with <a href="https://infinitefusion.fandom.com/wiki/Pokédex">natives mons available</a> in
-            Pokémon Infinite Fusion v5!<br>
-            This tool was created first by <a href="https://github.com/SDM0">SDM0</a>, then updated by <a
-            href="https://github.com/Aegide/Aegide.github.io">Aegide</a>.<br>
-            Shiny preview by <a href="https://github.com/Jokaes">Jokaes</a>.
-            <br><br>
-            <i>The sprites shown here were mostly made by members of the <a
-            href="https://discord.com/invite/2yynWRvBrB">IF Discord</a>,<br>
-            with some also coming from the <a href="https://www.reddit.com/r/PokemonInfiniteFusion/">IF Reddit</a>
-            community.</i>
-        </h4>
-        <br>
-        <button id="random" class="button" onclick="showShinies(true, true)">Random</button>
-        <button id="swap" class="button" onclick="swapPoke()">Swap ⇆</button>
-        <div id="t1">
-            <label for="fname1">Head:</label>
-            <input list="dlPkmn" type="text" id="fname1" name="fname1" value="" autocomplete="off">
-            <button id="random1" class="button" onclick="showShinies(true, false)">R1</button>
-        </div>
-        <div id="t2">
-            <label for="fname2">Body:</label>
-            <input list="dlPkmn" type="text" id="fname2" name="fname2" value="" autocomplete="off">
-            <button id="random2" class="button" onclick="showShinies(false, true)">R2</button>
-        </div>
-    </div>
-    <button id="fuse" class="button" onclick="showShinies(false, false)">Fuse</button>
-    </br></br>
-    <div>
-        <a id="dexnumber1">&nbsp;</a><a id="fusionid1">&nbsp;</a>
-    </div>
-    <sector id="shinies" class="shinies">
-        <div>
-            <p>Non-shiny</p>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-            <input type="image" class="picpokShiny" id="pic1" src="../question.png"/>
-            <input type="file" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" id="input_file" style="display: none" oninput="readURLImage(this);" />
-        </div>
-        <div>
-            <p>Head</p>
-            <img class="picpokShiny" id="pic2" alt="" src="../question.png">
-        </div>
-        <div>
-            <p>Body</p>
-            <img class="picpokShiny" id="pic3" alt="" src="../question.png">
-        </div>
-        <div>
-            <p>Head+Body</p>
-            <img class="picpokShiny" id="pic4" alt="" src="../question.png">
-        </div>
-    </sector>
-    <!--<p id="bottom">All rights reserved to Pokémon</p>-->
-    <script src="../infiniteFusionData.js"></script>
-    <script src="../poke.js"></script>
-    <script type='module' src="shinyModule.js"></script>
-</body>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Infinite Fusion Calculator</title>
+		<link rel="stylesheet" href="../reset.css" />
+		<link rel="stylesheet" href="../poke.css" />
+		<link href="https://fonts.googleapis.com/css2?family=Piazzolla:wght@500;600;700&display=swap" rel="stylesheet" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<h1 class="h1-title"><a href="../index.html" class="no-dec">Infinite Fusion Calculator</a></h1>
+
+		<main class="main-wrapper">
+			<div class="aside-wrapper">
+				<div class="notice">
+					<h2>Shiny preview</h2>
+					<p>Only works with <a href="https://infinitefusion.fandom.com/wiki/Pokédex">natives mons available</a> in Pokémon Infinite Fusion v5!</p>
+					<p>This tool was created first by <a href="https://github.com/SDM0">SDM0</a>, then updated by <a href="https://github.com/Aegide/Aegide.github.io">Aegide</a>.</p>
+					<p>Shiny preview by <a href="https://github.com/Jokaes">Jokaes</a>.</p>
+					<p class="italic">
+						The sprites shown here were mostly made by members of the <a href="https://discord.com/invite/2yynWRvBrB">IF Discord</a>, with some also coming from the
+						<a href="https://www.reddit.com/r/PokemonInfiniteFusion/">IF Reddit</a> community.
+					</p>
+				</div>
+
+				<div class="control-wrapper">
+					<div class="input-wrapper">
+						<div id="t1" class="input-item">
+							<label for="fname1">Head:</label>
+							<input list="dlPkmn" type="text" id="fname1" name="fname1" value="" autocomplete="off" />
+							<input type="button" id="random1" onclick="showShinies(true, false)" value="Randomize #1" />
+						</div>
+						<div id="t2" class="input-item">
+							<label for="fname2">Body:</label>
+							<input list="dlPkmn" type="text" id="fname2" name="fname2" value="" autocomplete="off" />
+							<input type="button" id="random2" onclick="showShinies(false, true)" value="Randomize #2" />
+						</div>
+					</div>
+
+					<div class="button-wrapper">
+						<input type="button" id="random" onclick="showShinies(true, true)" value="Random" />
+						<input type="button" id="swap" onclick="swapPoke()" value="Swap ⇆" />
+						<input type="button" id="fuse" onclick="showShinies(false,false)" value="Fuse" />
+					</div>
+				</div>
+			</div>
+
+			<div class="fusion-wrapper">
+				<div><a id="dexnumber1">&nbsp;</a><a id="fusionid1">&nbsp;</a></div>
+				<sector id="shinies" class="shinies-wrapper">
+					<div>
+						<p>Non-shiny</p>
+						<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+						<input type="image" class="picpokShiny" id="pic1" src="../question.png" />
+						<input type="file" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" id="input_file" style="display: none" oninput="readURLImage(this);" />
+					</div>
+					<div>
+						<p>Head</p>
+						<img class="picpokShiny" id="pic2" alt="" src="../question.png" />
+					</div>
+					<div>
+						<p>Body</p>
+						<img class="picpokShiny" id="pic3" alt="" src="../question.png" />
+					</div>
+					<div>
+						<p>Head+Body</p>
+						<img class="picpokShiny" id="pic4" alt="" src="../question.png" />
+					</div>
+				</sector>
+			</div>
+		</main>
+
+		<!--<p id="bottom">All rights reserved to Pokémon</p>-->
+		<script src="../infiniteFusionData.js"></script>
+		<script src="../poke.js"></script>
+		<script type="module" src="shinyModule.js"></script>
+	</body>
 </html>
