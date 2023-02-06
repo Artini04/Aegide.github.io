@@ -250,4 +250,8 @@ a:active {
     .button-wrapper * {
         flex: 1 1 10px;
     }
+
+    .shinies-wrapper {
+        grid-template-columns: 1fr;
+    }
 }
