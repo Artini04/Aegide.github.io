@@ -165,6 +165,11 @@ body {
     height   : auto;
 }
 
+.button:disabled {
+    background-color: rgb(33, 31, 37);
+    color           : gray;
+}
+
 label {
     font-weight: 900;
     font-size  : 1.4rem;
