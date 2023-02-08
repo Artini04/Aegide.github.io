@@ -138,3 +138,51 @@ a:link {
     background-color: transparent;
     text-decoration: dashed;
   }
+
+  input {
+    font-size: inherit;
+    font-family: inherit;
+  }
+
+/* MOBILE STYLE */
+@media only screen and (max-width: 425px) {
+    .calculator {
+        padding: 1rem;
+    }
+
+    .calculator>*+* {
+        margin-top: 0.5rem;
+    }
+
+    .calculator input {
+        box-sizing: border-box;
+        padding   : 0.5rem;
+        width     : 100%;
+    }
+
+    .inputs>* {
+        display: block;
+    }
+
+    .inputs>*+* {
+        margin-top: 0.5rem;
+    }
+
+    .buttons {
+        display  : flex;
+        flex-flow: row nowrap;
+        gap      : 0.5rem;
+    }
+
+    .buttons>* {
+        flex: 1 1 33%;
+    }
+
+    #stats {
+        font-size: 0.9rem;
+    }
+
+    #shinies {
+        grid-template-columns: 1fr;
+    }
+}
