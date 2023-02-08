@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"module": "EsNext",
+		"target": "ESNext",
+		"rootDir": "./",
+		"outDir": "./"
+	},
+	"include": ["**/*"],
+	"exclude": [""]
+}

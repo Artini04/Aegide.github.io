@@ -29,24 +29,24 @@
 				</div>
 
 				<div class="control-wrapper">
-					<div class="input-wrapper">
+					<div class="input-wrapper" id="input-wrapper">
 						<div id="t1" class="input-item">
 							<label for="fname1">First Pokémon:</label>
 							<input list="dlPkmn" type="text" id="fname1" name="fname1" value="" autocomplete="off" placeholder="Type here..." />
-							<input type="button" class="button" id="random1" value="Randomize #1" onclick="randomFirstPoke()" />
+							<input type="button" class="button" id="random1" value="Randomize #1" />
 						</div>
 
 						<div id="t2" class="input-item">
 							<label for="fname2">Second Pokémon:</label>
 							<input list="dlPkmn" type="text" id="fname2" name="fname2" value="" autocomplete="off" placeholder="Type here..." />
-							<input type="button" class="button" id="random2" value="Randomize #2" onclick="randomSecondPoke()" />
+							<input type="button" class="button" id="random2" value="Randomize #2" />
 						</div>
 					</div>
 
 					<div class="button-wrapper">
-						<input type="button" class="button" id="random" value="Random" onclick="randomBothPoke()" />
-						<input type="button" class="button" id="reset" value="Reset" onclick="resetPoke()" />
-						<input type="button" class="button" id="button" value="Fuse" onclick="fusePoke()" />
+						<input type="button" class="button" id="random" value="Random" />
+						<input type="button" class="button" id="reset" value="Reset" />
+						<input type="button" class="button" id="fuse" value="Fuse" />
 					</div>
 				</div>
 			</div>
@@ -128,6 +128,5 @@
 		</main>
 		<!--<p id="bottom">All rights reserved to Pokémon</p>-->
 	</body>
-	<script src="infiniteFusionData.js"></script>
-	<script src="poke.js"></script>
+	<script src="poke.js" type="module" defer></script>
 </html>
