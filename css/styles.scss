@@ -1,0 +1,166 @@
+// IMPORTS
+@import url('https://fonts.googleapis.com/css2?family=Piazzolla:opsz,wght@8..30,400;8..30,600;8..30,800&display=swap');
+
+:root {
+    --background-color          : rgb(20, 20, 20);
+    --font-color                : rgb(255, 255, 255);
+    --pokemon-wrapper-color     : rgb(49, 47, 56);
+    --pokemon-wrapper-font-color: rgb(255, 255, 255);
+
+    --type-max-size: 55px;
+    --border-radius: 3px;
+}
+
+body {
+    font-family: 'Piazzolla', sans-serif;
+    font-size  : 1rem;
+
+    background: var(--background-color);
+    color     : var(--font-color);
+
+    image-rendering: crisp-edges;
+}
+
+// =====================
+// == COMPOSITION ======
+// =====================
+main.main-container {
+    max-width    : 90vw;
+    margin-inline: auto;
+}
+
+.fusion-container {
+    display              : grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap                  : 1rem;
+
+    max-width    : 1000px;
+    margin-inline: auto;
+
+    .pokemon-wrapper {
+        flex: 1 1 50%;
+    }
+}
+
+.pokemon-wrapper {
+
+    color        : var(--pokemon-wrapper-font-color);
+    background   : var(--pokemon-wrapper-color);
+    border-radius: var(--border-radius);
+
+
+    &>* {
+        flex: 1 1 25%;
+    }
+
+    .media-container {
+        .picpok {
+            width     : 100%;
+            object-fit: cover;
+        }
+    }
+
+    .info-container {
+        padding: 1rem;
+
+        &>*+* {
+            margin-top: 0.5rem;
+        }
+
+        h2 {
+            text-align: left;
+            font-size : 2rem;
+        }
+
+        .data-table {
+            display  : flex;
+            flex-flow: column nowrap;
+            gap      : 0;
+
+            &>.tr+.tr {
+                border-top: 1px solid rgb(70, 70, 70);
+            }
+
+            .pictype {
+                display  : inline-block;
+                max-width: var(--type-max-size);
+                ;
+            }
+
+            .tr {
+                display  : flex;
+                flex-flow: row nowrap;
+                gap      : 0.5rem;
+
+                .th,
+                .td {
+                    flex   : 1 1 50%;
+                    padding: 0.4rem 0.5rem;
+                }
+
+                .th {
+                    text-align : right;
+                    font-weight: 800;
+                }
+
+                .td {
+                    text-align: left;
+                }
+            }
+        }
+    }
+}
+
+.list-wrapper {
+    display  : flex;
+    flex-flow: column nowrap;
+    gap      : 0.3rem;
+
+    span {
+        text-transform: capitalize;
+    }
+
+    .fusion-type {
+        max-width: var(--type-max-size);
+    }
+}
+
+.grid-wrapper {
+    display  : flex;
+    flex-flow: row wrap;
+    gap      : 0.4rem;
+
+    .weakness-type {
+        max-width: var(--type-max-size);
+    }
+}
+
+// =====================
+// == UTILITIES ========
+// =====================
+.center {
+    text-align: center;
+}
+
+.column {
+    &>* {
+        display: block;
+    }
+
+    &>*+* {
+        margin-top: 0.5rem;
+    }
+}
+
+.column-2 {
+    display              : grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.custom-sprite {
+    color: lightgreen;
+}
+
+.autogen-sprite {
+    color: lightcoral;
+}
