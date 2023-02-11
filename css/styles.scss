@@ -2,165 +2,238 @@
 @import url('https://fonts.googleapis.com/css2?family=Piazzolla:opsz,wght@8..30,400;8..30,600;8..30,800&display=swap');
 
 :root {
-    --background-color          : rgb(20, 20, 20);
+    scroll-behavior: smooth;
+
+    --background-color          : rgb(27, 27, 27);
     --font-color                : rgb(255, 255, 255);
     --pokemon-wrapper-color     : rgb(49, 47, 56);
     --pokemon-wrapper-font-color: rgb(255, 255, 255);
 
+    --autogen-color: rgb(255, 97, 97);
+    --custom-color : rgb(114, 240, 114);
+    --low-color    : rgb(74, 206, 250);
+    --high-color   : rgb(255, 95, 95);
+    --bal-color    : rgb(255, 255, 129);
+
     --type-max-size: 55px;
-    --border-radius: 3px;
+    --border-radius: 5px;
 }
 
 body {
     font-family: 'Piazzolla', sans-serif;
-    font-size  : 1rem;
 
     background: var(--background-color);
     color     : var(--font-color);
 
-    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    overflow-x     : hidden;
 }
 
-// =====================
-// == COMPOSITION ======
-// =====================
-main.main-container {
-    max-width    : 90vw;
-    margin-inline: auto;
+header {
+    display  : flex;
+    flex-flow: row nowrap;
+    gap      : 1rem;
 }
 
-.fusion-container {
-    display              : grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap                  : 1rem;
-
-    max-width    : 1000px;
-    margin-inline: auto;
-
-    .pokemon-wrapper {
-        flex: 1 1 50%;
-    }
+main {
+    width: 100dvw;
 }
 
-.pokemon-wrapper {
-
-    color        : var(--pokemon-wrapper-font-color);
-    background   : var(--pokemon-wrapper-color);
+.block-rounded {
     border-radius: var(--border-radius);
-
-
-    &>* {
-        flex: 1 1 25%;
-    }
-
-    .media-container {
-        .picpok {
-            width     : 100%;
-            object-fit: cover;
-        }
-    }
-
-    .info-container {
-        padding: 1rem;
-
-        &>*+* {
-            margin-top: 0.5rem;
-        }
-
-        h2 {
-            text-align: left;
-            font-size : 2rem;
-        }
-
-        .data-table {
-            display  : flex;
-            flex-flow: column nowrap;
-            gap      : 0;
-
-            &>.tr+.tr {
-                border-top: 1px solid rgb(70, 70, 70);
-            }
-
-            .pictype {
-                display  : inline-block;
-                max-width: var(--type-max-size);
-                ;
-            }
-
-            .tr {
-                display  : flex;
-                flex-flow: row nowrap;
-                gap      : 0.5rem;
-
-                .th,
-                .td {
-                    flex   : 1 1 50%;
-                    padding: 0.4rem 0.5rem;
-                }
-
-                .th {
-                    text-align : right;
-                    font-weight: 800;
-                }
-
-                .td {
-                    text-align: left;
-                }
-            }
-        }
-    }
+    padding      : 1rem;
 }
 
-.list-wrapper {
-    display  : flex;
-    flex-flow: column nowrap;
-    gap      : 0.3rem;
+.notice-container {
+    $border    : 10px;
+    $background: steelblue;
 
-    span {
-        text-transform: capitalize;
-    }
-
-    .fusion-type {
-        max-width: var(--type-max-size);
-    }
-}
-
-.grid-wrapper {
-    display  : flex;
-    flex-flow: row wrap;
-    gap      : 0.4rem;
-
-    .weakness-type {
-        max-width: var(--type-max-size);
-    }
-}
-
-// =====================
-// == UTILITIES ========
-// =====================
-.center {
-    text-align: center;
-}
-
-.column {
-    &>* {
-        display: block;
-    }
+    background   : darken($background, $amount: 30);
+    border-top   : $border solid $background;
+    border-bottom: $border solid $background;
 
     &>*+* {
         margin-top: 0.5rem;
     }
 }
 
-.column-2 {
-    display              : grid;
-    grid-template-columns: repeat(2, 1fr);
+.only-desktop {
+    display: none;
 }
 
-.custom-sprite {
-    color: lightgreen;
+.calculator {
+
+    &>*+* {
+        margin-top: 1rem;
+    }
+
+    .inputs,
+    .buttons {
+        display  : flex;
+        flex-flow: column nowrap;
+        gap      : 0.5rem;
+    }
+
+    label {
+        font-size  : 2rem;
+        font-weight: 600;
+    }
+
+    input {
+        padding: 0.5rem;
+
+        &[type='text'] {
+            text-transform: capitalize;
+        }
+    }
 }
 
+.fusion-table {
+    width  : 100%;
+    padding: 0.5rem 2rem;
+
+    tbody {
+        display  : flex;
+        flex-flow: column nowrap;
+        gap      : 0.5rem;
+
+        &>*+* {
+            border-top: 1px solid rgb(97, 97, 97);
+        }
+    }
+
+    tr {
+        display  : flex;
+        flex-flow: row nowrap;
+        gap      : 0.4rem;
+
+        th,
+        td {
+            flex: 1 1 33%;
+
+            .fusion-type,
+            .weakness-type {
+                max-width: var(--type-max-size);
+            }
+        }
+
+        td:nth-child(1) {
+            text-align: right;
+            word-wrap : break-word;
+        }
+
+        td:nth-child(2) {
+            text-align: left;
+            word-wrap : break-word;
+        }
+
+        .center {
+            text-align: center;
+        }
+    }
+}
+
+.list-wrapper,
+#ab1,
+#ab2,
+#FP1,
+#FP2,
+#FP3 {
+    display  : flex;
+    flex-flow: column wrap;
+    gap      : 0.4rem;
+
+    text-transform: capitalize;
+}
+
+.left.list-wrapper,
+#ab1,
+#hab1,
+#FP1,
+#type1 {
+    align-items: flex-end;
+}
+
+// UTILITIES
+.title {
+    text-align: center;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.autogen-text,
 .autogen-sprite {
-    color: lightcoral;
+    color: var(--autogen-color);
+}
+
+.custom-text,
+.custom-sprite {
+    color: var(--custom-color)
+}
+
+.low-stat {
+    color: var(--low-color)
+}
+
+.high-stat {
+    color: var(--high-color)
+}
+
+.bal-stat {
+    color: var(--bal-color)
+}
+
+.important {
+    text-transform: uppercase;
+    font-weight   : 900;
+    color         : var(--autogen-color);
+}
+
+@media only screen and (max-width: 425px) {
+    body {
+        font-size: 1.2rem;
+
+        &>*+* {
+            margin-top: 2rem;
+        }
+    }
+
+    header {
+        flex-flow: column nowrap;
+        padding  : 1rem;
+    }
+}
+
+@media only screen and (min-width: 426px) {
+
+    header {
+        max-width    : 1000px;
+        margin-inline: auto;
+    }
+
+    .only-desktop {
+        display: block;
+    }
+
+    .main-container {
+        display  : flex;
+        flex-flow: row nowrap;
+
+        max-width    : 1000px;
+        margin-inline: auto;
+    }
+
+    .calculator {
+        position  : sticky;
+        top       : 20px;
+        max-height: 400px;
+
+        flex: 1 1 30%;
+    }
+
+    .fusion-container {
+        flex: 1 1 70%;
+    }
 }

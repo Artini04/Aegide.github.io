@@ -1,296 +1,194 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="keywords" content="infinite fusion, pokefusion, pokemon, fusion, infinite pokemon fusion, infinnite pokefusion" />
-		<meta name="description" content="Infinite Pokemon Fusion" />
+<html lang="en">
 
-		<title>Infinite Fusion Calculator</title>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="keywords" content="infinite fusion, infinite fusion calculator" />
+	<meta name="description" content="Infinite Pokemon Fusion" />
+	<title>Infinite Fusion Calculator</title>
+	<link rel="stylesheet" href="./css/reset.css" />
+	<link rel="stylesheet" href="./css/styles.css" />
+</head>
 
-		<link rel="stylesheet" href="./css/reset.css" />
-		<link rel="stylesheet" href="./css/styles.css" />
-		<link href="https://fonts.googleapis.com/css2?family=Piazzolla:wght@500;600;700&display=swap" rel="stylesheet" />
-	</head>
+<body>
+	<h1 class="title">Infinite Fusion Calculator</h1>
+	<header>
+		<div class="notice-container block-rounded">
+			<h2>Notice!</h2>
+			<p>
+				This project is a fork from <a href="https://twitter.com/SDM_0_">SDM0</a>/
+				<a href="https://github.com/Aegide">Aegide</a>. I've done some refactors within the code but most of
+				them are still based on the original code. My aim here is to have a better mobile view. <span
+					class="important">Site still WIP!</span>
+			</p>
 
-	<body>
-		<h1>Infinite Fusion Calculator</h1>
-		<div id="text">
-			<h4>
-				Only works with <a href="https://infinitefusion.fandom.com/wiki/Pokédex">natives mons available</a> in Pokémon Infinite Fusion v5 ! This project was created by <a href="https://twitter.com/SDM_0_">SDM0</a>, then maintained by <a href="https://github.com/Aegide">Aegide</a>. The data used is from the game, but is mostly based on generation 7.
-				<i> <span class="green-text">Custom sprites</span> in <span class="green-text">green</span> are made by artists, from the <a href="https://discord.com/invite/2yynWRvBrB">Infinite Fusion Discord</a> and <a href="https://www.reddit.com/r/PokemonInfiniteFusion/">Reddit</a>. </i>
-				<i> <span class="red-text">Generated sprites</span> in <span class="red-text">red</span> are from <a href="https://japeal.com/pkm/">Japeal</a>. They were extracted and <a href="https://github.com/Aegide/autogen-fusion-sprites/commits/master/Battlers">fixed</a> by <a href="https://github.com/Aegide">Aegide</a>. </i>
-			</h4>
+			<p class="italic">
+				Only works with <a href="https://infinitefusion.fandom.com/wiki/Pokédex">natives mons available</a> in
+				Pokémon Infinite Fusion v5! The data used here are from the game, but is mostly based on generation 7.
+			</p>
+
+			<p class="italic">
+				<span class="custom-text">Fusion IDs</span> in <span class="custom-text">green</span> are made by
+				artists from the <a href="https://discord.com/invite/2yynWRvBrB">Infinite Fusion Discord</a>
+				and <a href="https://www.reddit.com/r/PokemonInfiniteFusion/">Reddit</a>.
+				<span class="autogen-text">Fusion IDs</span> in <span class="autogen-text">red</span> are from
+				<a href="https://japeal.com/pkm/">Japeal</a>. They were extracted and
+				<a href="https://github.com/Aegide/autogen-fusion-sprites/commits/master/Battlers">fixed</a>
+				by <a href="https://github.com/Aegide">Aegide</a>.
+			</p>
 		</div>
+		<div class="notice-container block-rounded only-desktop">
+			<h2>Desktop users!</h2>
+			<p>
+				If you're using desktop, please just use the <a href="https://aegide.github.io/">original site</a>!
+			</p>
+		</div>
+	</header>
 
-		<main class="main-container">
-			<div class="calculator" id="calculator">
-				<datalist id="dlPkmn"></datalist>
-				<div id="t1" class="inputs">
-					<label for="fname1">First Pokémon:</label>
-					<input list="dlPkmn" type="text" id="fname1" name="fname1" value="" autocomplete="off" />
-					<input id="random1" type="button" class="button" value="R1" />
-				</div>
-				<div id="t2" class="inputs">
-					<label for="fname2">Second Pokémon:</label>
-					<input list="dlPkmn" type="text" id="fname2" name="fname2" value="" autocomplete="off" />
-					<input id="random2" type="button" class="button" value="R2" />
-				</div>
-
-				<div class="buttons">
-					<input id="random" type="button" class="button" value="Random" />
-					<input id="reset" type="button" class="button" value="Reset" />
-					<input id="fuse" type="button" class="button" value="Fuse" />
-				</div>
+	<main class="main-container">
+		<div class="calculator block-rounded" id="calculator">
+			<div id="t1" class="inputs">
+				<label for="fname1">First Pokémon:</label>
+				<input list="dlPkmn" type="text" id="fname1" name="fname1" value="" autocomplete="off" />
+				<input id="random1" type="button" class="button" value="Randomize #1" />
 			</div>
 
-			<sector id="stats" class="fusion-container">
-				<div id="L2" class="pokemon-wrapper">
-					<div class="media-container">
-						<img class="picpok" id="pic1" alt="" src="question.png" />
-					</div>
+			<div id="t2" class="inputs">
+				<label for="fname2">Second Pokémon:</label>
+				<input list="dlPkmn" type="text" id="fname2" name="fname2" value="" autocomplete="off" />
+				<input id="random2" type="button" class="button" value="Randomize #2" />
+			</div>
 
-					<div class="info-container column">
-						<h2>Pokemon Info</h2>
-						<div class="data-table">
-							<div class="tr">
-								<div class="th"><p>Fusion DEX</p></div>
-								<div class="td"><p id="dexnumber1"></p></div>
-							</div>
+			<div class="buttons">
+				<input id="random" type="button" class="button" value="Random" />
+				<input id="reset" type="button" class="button" value="Reset" />
+				<input id="fuse" type="button" class="button" value="Fuse" />
+			</div>
 
-							<div class="tr">
-								<div class="th list-wrapper">
-									<span>Pkmn 1</span>
-									<span>Pkmn 2</span>
-								</div>
-								<div class="td list-wrapper" id="FP1"></div>
-							</div>
-							<div class="tr">
-								<div class="th"><p>Fusion ID</p></div>
-								<div class="td"><p id="fusionid1"></p></div>
-							</div>
-							<div class="tr">
-								<div class="th"><p>Type/s</p></div>
-								<div class="td list-wrapper" id="type1"></div>
-							</div>
-						</div>
-					</div>
+			<datalist id="dlPkmn"></datalist>
+		</div>
 
-					<div class="info-container column">
-						<h2>Pokemon Data</h2>
-						<div class="data-table">
-							<div class="tr">
-								<div class="th"><p>HP</p></div>
-								<div class="td"><p id="hp1"></p></div>
-							</div>
-							<div class="tr">
-								<div class="th"><p>ATK</p></div>
-								<div class="td"><p id="atk1"></p></div>
-							</div>
-							<div class="tr">
-								<div class="th"><p>DEF</p></div>
-								<div class="td"><p id="def1"></p></div>
-							</div>
-							<div class="tr">
-								<div class="th"><p>TOTAL</p></div>
-								<div class="td"><p id="bs1"></p></div>
-							</div>
-							<div class="tr">
-								<div class="th"><p>SP. ATK</p></div>
-								<div class="td"><p id="spatk1"></p></div>
-							</div>
-							<div class="tr">
-								<div class="th"><p>SP. DEF</p></div>
-								<div class="td"><p id="spdef1"></p></div>
-							</div>
-							<div class="tr">
-								<div class="th"><p>SPEED</p></div>
-								<div class="td"><p id="spe1"></p></div>
-							</div>
-							<div class="tr">
-								<div class="th">
-									<p>Abilities</p>
-								</div>
-								<div class="td list-wrapper" id="ab1"></div>
-							</div>
-							<div class="tr">
-								<div class="th">
-									<p>Hidden Ability</p>
-								</div>
-								<div class="td list-wrapper" id="hab1"></div>
-							</div>
-						</div>
-					</div>
+		<div class="fusion-container">
+			<table class="fusion-table" id="fusion-table">
+				<tr>
+					<td class="left">
+						<img id="pic1" src="question.png" alt="Fusion 1">
+					</td>
+					<th class="center"></th>
+					<td class="right">
+						<img id="pic2" src="question.png" alt="Fusion 2">
+					</td>
+				</tr>
+				<tr>
+					<td class="left" id="dexnumber1">---</td>
+					<th class="center">DEXNUM</th>
+					<td class="right" id="dexnumber2">---</td>
+				</tr>
+				<tr>
+					<td class="left" id="fusionid1">---</td>
+					<th class="center">FUSION ID</th>
+					<td class="right" id="fusionid2">---</td>
+				</tr>
+				<tr>
+					<td class="left" id="FP1">---</td>
+					<th class="center" id="FP3">
+						<span>Pokemon 1</span>
+						<span>Pokemon 2</span>
+					</th>
+					<td class="right" id="FP2">---</td>
+				</tr>
+				<tr>
+					<td class="left list-wrapper" id="type1">---</td>
+					<th class="center"> TYPES</th>
+					<td class="right list-wrapper" id="type2">---</td>
+				</tr>
+			</table>
 
-					<div class="info-container">
-						<h2>Weakness</h2>
-						<div class="column">
-							<div class="data-table">
-								<div class="tr">
-									<div class="th">
-										<span>x4</span>
-									</div>
-									<div class="td grid-wrapper" id="weak14"></div>
-								</div>
-								<div class="tr">
-									<div class="th">
-										<span>x2</span>
-									</div>
-									<div class="td grid-wrapper" id="weak12"></div>
-								</div>
-								<div class="tr">
-									<div class="th">
-										<span>x1</span>
-									</div>
-									<div class="td grid-wrapper" id="weak11"></div>
-								</div>
-								<div class="tr">
-									<div class="th">
-										<span>x05</span>
-									</div>
-									<div class="td grid-wrapper" id="weak105"></div>
-								</div>
-								<div class="tr">
-									<div class="th">
-										<span>x025</span>
-									</div>
-									<div class="td grid-wrapper" id="weak1025"></div>
-								</div>
-								<div class="tr">
-									<div class="th">
-										<span>x0</span>
-									</div>
-									<div class="td grid-wrapper" id="weak100"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+			<table class="fusion-table">
+				<tr>
+					<td class="left" id="hp1">---</td>
+					<th class="center">HP</th>
+					<td class="right" id="hp2">---</td>
+				</tr>
+				<tr>
+					<td class="left" id="atk1">---</td>
+					<th class="center">ATK</th>
+					<td class="right" id="atk2">---</td>
+				</tr>
+				<tr>
+					<td class="left" id="def1">---</td>
+					<th class="center">DEF</th>
+					<td class="right" id="def2">---</td>
+				</tr>
+				<tr>
+					<td class="left" id="spatk1">---</td>
+					<th class="center">SP.ATK</th>
+					<td class="right" id="spatk2">---</td>
+				</tr>
+				<tr>
+					<td class="left" id="spdef1">---</td>
+					<th class="center">SP.DEF</th>
+					<td class="right" id="spdef2">---</td>
+				</tr>
+				<tr>
+					<td class="left" id="spe1">---</td>
+					<th class="center">SPEED</th>
+					<td class="right" id="spe2">---</td>
+				</tr>
+				<tr>
+					<td class="left" id="bs1">---</td>
+					<th class="center">TOTAL</th>
+					<td class="right" id="bs2">---</td>
+				</tr>
+			</table>
 
-				<div id="R2" class="pokemon-wrapper">
-					<div class="media-container">
-						<img class="picpok" id="pic2" alt="" src="question.png" />
-					</div>
+			<table class="fusion-table">
+				<tr>
+					<td class="left" id="ab1">---</td>
+					<th class="center">ABILITIES</th>
+					<td class="right" id="ab2">---</td>
+				</tr>
+				<tr>
+					<td class="left list-wrapper" id="hab1">---</td>
+					<th class="center">HIDDEN ABILITIES</th>
+					<td class="right list-wrapper" id="hab2">---</td>
+				</tr>
+				<tr>
+					<td class="left list-wrapper" id="weak14">---</td>
+					<th class="center">x4</th>
+					<td class="right list-wrapper" id="weak24">---</td>
+				</tr>
+				<tr>
+					<td class="left list-wrapper" id="weak12">---</td>
+					<th class="center">x2</th>
+					<td class="right list-wrapper" id="weak22">---</td>
+				</tr>
+				<tr>
+					<td class="left list-wrapper" id="weak11">---</td>
+					<th class="center">x1</th>
+					<td class="right list-wrapper" id="weak21">---</td>
+				</tr>
+				<tr>
+					<td class="left list-wrapper" id="weak105">---</td>
+					<th class="center">x0.5</th>
+					<td class="right list-wrapper" id="weak205">---</td>
+				</tr>
+				<tr>
+					<td class="left list-wrapper" id="weak1025">---</td>
+					<th class="center">x0.25</th>
+					<td class="right list-wrapper" id="weak2025">---</td>
+				</tr>
+				<tr>
+					<td class="left list-wrapper" id="weak100">---</td>
+					<th class="center">x0</th>
+					<td class="right list-wrapper" id="weak200">---</td>
+				</tr>
+			</table>
+		</div>
+	</main>
+	<!--<p id="bottom">All rights reserved to Pokémon</p>-->
+</body>
+<script src="./script/poke.js" type="module"></script>
 
-					<div class="info-container column">
-						<h2>Pokemon Info</h2>
-						<div class="data-table">
-							<div class="tr">
-								<div class="th"><p>Fusion DEX</p></div>
-								<div class="td"><p id="dexnumber2"></p></div>
-							</div>
-
-							<div class="tr">
-								<div class="th list-wrapper">
-									<span>Pkmn 1</span>
-									<span>Pkmn 2</span>
-								</div>
-								<div class="td list-wrapper" id="FP2"></div>
-							</div>
-							<div class="tr">
-								<div class="th"><p>Fusion ID</p></div>
-								<div class="td"><p id="fusionid2"></p></div>
-							</div>
-							<div class="tr">
-								<div class="th"><p>Type/s</p></div>
-								<div class="td list-wrapper" id="type2"></div>
-							</div>
-						</div>
-					</div>
-
-					<div class="info-container column">
-						<h2>Pokemon Data</h2>
-						<div class="data-table">
-							<div class="tr">
-								<div class="th"><p>HP</p></div>
-								<div class="td"><p id="hp2"></p></div>
-							</div>
-							<div class="tr">
-								<div class="th"><p>ATK</p></div>
-								<div class="td"><p id="atk2"></p></div>
-							</div>
-							<div class="tr">
-								<div class="th"><p>DEF</p></div>
-								<div class="td"><p id="def2"></p></div>
-							</div>
-							<div class="tr">
-								<div class="th"><p>TOTAL</p></div>
-								<div class="td"><p id="bs2"></p></div>
-							</div>
-							<div class="tr">
-								<div class="th"><p>SP. ATK</p></div>
-								<div class="td"><p id="spatk2"></p></div>
-							</div>
-							<div class="tr">
-								<div class="th"><p>SP. DEF</p></div>
-								<div class="td"><p id="spdef2"></p></div>
-							</div>
-							<div class="tr">
-								<div class="th"><p>SPEED</p></div>
-								<div class="td"><p id="spe2"></p></div>
-							</div>
-							<div class="tr">
-								<div class="th">
-									<p>Abilities</p>
-								</div>
-								<div class="td list-wrapper" id="ab2"></div>
-							</div>
-							<div class="tr">
-								<div class="th">
-									<p>Hidden Ability</p>
-								</div>
-								<div class="td list-wrapper" id="hab2"></div>
-							</div>
-						</div>
-					</div>
-
-					<div class="info-container">
-						<h2>Weakness</h2>
-						<div class="column">
-							<div class="data-table">
-								<div class="tr">
-									<div class="th">
-										<span>x4</span>
-									</div>
-									<div class="td grid-wrapper" id="weak24"></div>
-								</div>
-								<div class="tr">
-									<div class="th">
-										<span>x2</span>
-									</div>
-									<div class="td grid-wrapper" id="weak22"></div>
-								</div>
-								<div class="tr">
-									<div class="th">
-										<span>x1</span>
-									</div>
-									<div class="td grid-wrapper" id="weak21"></div>
-								</div>
-								<div class="tr">
-									<div class="th">
-										<span>x05</span>
-									</div>
-									<div class="td grid-wrapper" id="weak205"></div>
-								</div>
-								<div class="tr">
-									<div class="th">
-										<span>x025</span>
-									</div>
-									<div class="td grid-wrapper" id="weak2025"></div>
-								</div>
-								<div class="tr">
-									<div class="th">
-										<span>x0</span>
-									</div>
-									<div class="td grid-wrapper" id="weak200"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</sector>
-		</main>
-		<!--<p id="bottom">All rights reserved to Pokémon</p>-->
-	</body>
-	<script src="./script/poke.js" type="module"></script>
 </html>

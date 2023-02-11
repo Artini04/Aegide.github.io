@@ -1,21 +1,9 @@
-import { ids, nameFix, nameException, types, typeName, typeSwap, typeUni, statsException, statsFix, abilitiesException, abilitiesFix, abilitySwap, selfFusionTypeException, selfFusionTypeFix } from './infiniteFusionData.js';
-// LIST OF HELPER FUNCTIONS
-// - conlog() : Only logs when is_verbose is true
-// - getByID(htmlID) : short version of document.getElementByID()
-//                   : returns HTMLElement
-// NAMING
-// ======
-// | functions | camelCase
-// | variables | snake_case
+import { ids, nameFix, nameException, types, typeName, typeSwap, typeUni, statsException, statsFix, abilitiesException, abilitiesFix, abilitySwap, selfFusionTypeException, selfFusionTypeFix, } from './infiniteFusionData.js';
 // ============================================================================================================
 // == WEB PROPERTIES ==========================================================================================
 // ============================================================================================================
-let is_verbose = true;
+let IS_VERBOSE = true;
 const MAX_POKEMON = 420;
-const BUTTON_TIMEOUT = 700;
-const COLOR_RED = 'lightcoral';
-const COLOR_GREEN = 'lightgreen';
-const COLOR_ORANGE = 'lemonchiffon';
 const ERROR_INPUT_MISSING = 'Please fill out the text inputs!';
 const ERROR_NIDORAN_GENDER = "Please specify Nidoran's gender!";
 const POKEAPI_URL = 'https://pokeapi.co/api/v2/pokemon/';
@@ -144,12 +132,18 @@ random2_btn.addEventListener('click', function () {
 random_btn.addEventListener('click', function () {
     randomPoke(true, true);
 });
-reset_btn.addEventListener('click', function () {
-    resetPoke();
-});
-fuse_btn.addEventListener('click', function () {
-    fusePoke();
-});
+if (reset_btn) {
+    reset_btn.addEventListener('click', function () {
+        resetPoke();
+    });
+}
+if (fuse_btn) {
+    fuse_btn.addEventListener('click', function () {
+        fusePoke();
+        location.href = '#';
+        location.href = '#fusion-table';
+    });
+}
 pkmn1_input.addEventListener('keydown', function (event) {
     if (event.key === 'Enter') {
         fusePoke();
@@ -163,7 +157,7 @@ pkmn2_input.addEventListener('keydown', function (event) {
 // ============================================================================================================
 // == END OF EVENT LISTENERS  =================================================================================
 // ============================================================================================================
-// FIRE FUNCTIONS WHEN DOCUMENT LOADED
+// FIRE FUNCTIONS WHEN DOCUMENT IS LOADED
 createDatalistOptions();
 // ============================================================================================================
 // == MAIN FUNCTIONS ==========================================================================================
@@ -222,7 +216,11 @@ function resetPoke() {
     }
 }
 function randomPoke(should_rand1, should_rand2) {
-    conlog('Randomizing Pokemon(s)' + '\nFP => ' + should_rand1 + '\nSP => ' + should_rand2);
+    conlog('Randomizing Pokemon(s)' +
+        '\nFP => ' +
+        should_rand1 +
+        '\nSP => ' +
+        should_rand2);
     disableButtons();
     console.clear();
     // Randomize first Pokemon
@@ -241,7 +239,10 @@ function randomPoke(should_rand1, should_rand2) {
     enableButtons();
 }
 async function fusePoke() {
-    conlog('Fusing pokemon! ' + pkmn1_input.value + ' \u21cc ' + pkmn2_input.value);
+    conlog('Fusing pokemon! ' +
+        pkmn1_input.value +
+        ' \u21cc ' +
+        pkmn2_input.value);
     disableButtons();
     // Check if two text inputs are filled out!
     if (!pkmn1_input.value || !pkmn2_input.value) {
@@ -250,14 +251,15 @@ async function fusePoke() {
         return;
     }
     // Nidoran clause
-    if (pkmn1_input.value.toLowerCase() === 'nidoran' || pkmn1_input.value.toLowerCase() === 'nidoran') {
+    if (pkmn1_input.value.toLowerCase() === 'nidoran' ||
+        pkmn1_input.value.toLowerCase() === 'nidoran') {
         alert(ERROR_NIDORAN_GENDER);
         enableButtons();
         return;
     }
     // Special mon selector: Giratina, Deoxys
-    pkmn1_input.value = checkPokeName(pkmn1_input.value);
-    pkmn2_input.value = checkPokeName(pkmn2_input.value);
+    // pkmn1_input.value = checkPokeName(pkmn1_input.value)
+    // pkmn2_input.value = checkPokeName(pkmn2_input.value)
     const pkmn1_response = await fetchPokeAPI(pkmn1_input.value.toLowerCase());
     const pkmn2_response = await fetchPokeAPI(pkmn2_input.value.toLowerCase());
     buildPokemon(pkmn1_response, pkmn1_input.value, pokemon1);
@@ -325,7 +327,8 @@ function buildFusedPokemon(fused_pokemon_obj, head_pokemon, body_pokemon) {
     const type_effective_id = typeId(fusion_types);
     const type_effectiveness_array = [];
     for (const key in typeName) {
-        type_effectiveness_array.push(types[key][type_effective_id[0]] * types[key][type_effective_id[1]]);
+        type_effectiveness_array.push(types[key][type_effective_id[0]] *
+            types[key][type_effective_id[1]]);
     }
     fused_pokemon_obj.type_effectiveness = type_effectiveness_array;
     // Build FUSION ABILITIES
@@ -336,16 +339,111 @@ function buildFusedPokemon(fused_pokemon_obj, head_pokemon, body_pokemon) {
     const fused_hidden_abilities = sanitizeAbilityList(hidden_abilities);
     fused_pokemon_obj.abilities = fused_abilities;
     fused_pokemon_obj.hidden_abilities = fused_hidden_abilities;
-    console.log(fused_pokemon_obj);
 }
+/**
+ * @param {FusedPokemon} head_pokemon
+ * @param {FusedPokemon} body_pokemon
+ * @param {FusionHTMLCollection} HTMLCollection
+ */
 function buildUI(head_pokemon, body_pokemon, HTMLCollection) {
-    HTMLCollection.hp.innerHTML = head_pokemon.stats[0].toString();
-    HTMLCollection.atk.innerHTML = head_pokemon.stats[1].toString();
-    HTMLCollection.def.innerHTML = head_pokemon.stats[2].toString();
-    HTMLCollection.spatk.innerHTML = head_pokemon.stats[3].toString();
-    HTMLCollection.spdef.innerHTML = head_pokemon.stats[4].toString();
-    HTMLCollection.spe.innerHTML = head_pokemon.stats[5].toString();
-    HTMLCollection.bs.innerHTML = head_pokemon.stats[6].toString();
+    HTMLCollection.hp.innerHTML =
+        head_pokemon.stats[0].toString() +
+            ' ( ' +
+            (head_pokemon.stats[0] - body_pokemon.stats[0]) +
+            ' )';
+    if (head_pokemon.stats[0] < body_pokemon.stats[0]) {
+        HTMLCollection.hp.className = 'low-stat';
+    }
+    else if (head_pokemon.stats[0] > body_pokemon.stats[0]) {
+        HTMLCollection.hp.className = 'high-stat';
+    }
+    else {
+        HTMLCollection.hp.className = 'bal-stat';
+    }
+    HTMLCollection.atk.innerHTML =
+        head_pokemon.stats[1].toString() +
+            ' ( ' +
+            (head_pokemon.stats[1] - body_pokemon.stats[1]) +
+            ' )';
+    if (head_pokemon.stats[1] < body_pokemon.stats[1]) {
+        HTMLCollection.atk.className = 'low-stat';
+    }
+    else if (head_pokemon.stats[1] > body_pokemon.stats[1]) {
+        HTMLCollection.atk.className = 'high-stat';
+    }
+    else {
+        HTMLCollection.atk.className = 'bal-stat';
+    }
+    HTMLCollection.def.innerHTML =
+        head_pokemon.stats[2].toString() +
+            ' ( ' +
+            (head_pokemon.stats[2] - body_pokemon.stats[2]) +
+            ' )';
+    if (head_pokemon.stats[2] < body_pokemon.stats[2]) {
+        HTMLCollection.def.className = 'low-stat';
+    }
+    else if (head_pokemon.stats[2] > body_pokemon.stats[2]) {
+        HTMLCollection.def.className = 'high-stat';
+    }
+    else {
+        HTMLCollection.def.className = 'bal-stat';
+    }
+    HTMLCollection.spatk.innerHTML =
+        head_pokemon.stats[3].toString() +
+            ' ( ' +
+            (head_pokemon.stats[3] - body_pokemon.stats[3]) +
+            ' )';
+    if (head_pokemon.stats[3] < body_pokemon.stats[3]) {
+        HTMLCollection.spatk.className = 'low-stat';
+    }
+    else if (head_pokemon.stats[3] > body_pokemon.stats[3]) {
+        HTMLCollection.spatk.className = 'high-stat';
+    }
+    else {
+        HTMLCollection.spatk.className = 'bal-stat';
+    }
+    HTMLCollection.spdef.innerHTML =
+        head_pokemon.stats[4].toString() +
+            ' ( ' +
+            (head_pokemon.stats[4] - body_pokemon.stats[4]) +
+            ' )';
+    if (head_pokemon.stats[4] < body_pokemon.stats[4]) {
+        HTMLCollection.spdef.className = 'low-stat';
+    }
+    else if (head_pokemon.stats[4] > body_pokemon.stats[4]) {
+        HTMLCollection.spdef.className = 'high-stat';
+    }
+    else {
+        HTMLCollection.spdef.className = 'bal-stat';
+    }
+    HTMLCollection.spe.innerHTML =
+        head_pokemon.stats[5].toString() +
+            ' ( ' +
+            (head_pokemon.stats[5] - body_pokemon.stats[5]) +
+            ' )';
+    if (head_pokemon.stats[5] < body_pokemon.stats[5]) {
+        HTMLCollection.spe.className = 'low-stat';
+    }
+    else if (head_pokemon.stats[5] > body_pokemon.stats[5]) {
+        HTMLCollection.spe.className = 'high-stat';
+    }
+    else {
+        HTMLCollection.spe.className = 'bal-stat';
+    }
+    HTMLCollection.bs.innerHTML =
+        head_pokemon.stats[6].toString() +
+            ' ( ' +
+            (head_pokemon.stats[6] - body_pokemon.stats[6]) +
+            ' )';
+    if (head_pokemon.stats[6] < body_pokemon.stats[6]) {
+        HTMLCollection.bs.className = 'low-stat';
+    }
+    else if (head_pokemon.stats[6] > body_pokemon.stats[6]) {
+        HTMLCollection.bs.className = 'high-stat';
+    }
+    else {
+        HTMLCollection.bs.className = 'bal-stat';
+    }
     HTMLCollection.dexnum.innerHTML = head_pokemon.id.toString();
     HTMLCollection.fusionID.innerHTML = head_pokemon.fusion_id.toString();
     // Build Name, Abilities, and Hidden Abilities list
@@ -403,7 +501,11 @@ function appendSrcToTypeEffectiveness(list_array, HTMLElements, class_name) {
 }
 async function appendSrcToImage(fusionID, html_element, elementFusionID) {
     const fusion_Url = CUSTOM_FUSION_URL + fusionID + '.png';
-    const fallback_Fusion_Url = FALLBACK_FUSION_URL + fusionID.toString().split('.')[0] + '/' + fusionID + '.png';
+    const fallback_Fusion_Url = FALLBACK_FUSION_URL +
+        fusionID.toString().split('.')[0] +
+        '/' +
+        fusionID +
+        '.png';
     const response = await fetch(fusion_Url)
         .then((r) => r)
         .catch((e) => e);
@@ -417,239 +519,6 @@ async function appendSrcToImage(fusionID, html_element, elementFusionID) {
     }
 }
 // function fuseBothPoke() {
-// 	conlog('Fusing Both pokemons!')
-// 	// TODO : refactor this
-// 	// //Name of fusion
-// 	// if (!nameFix.includes(mon1) && !nameFix.includes(mon2)) {
-// 	// 	fmon1 = mon1.charAt(0).toUpperCase() + mon1.slice(1)
-// 	// 	fmon2 = mon2.charAt(0).toUpperCase() + mon2.slice(1)
-// 	// } else if (nameFix.includes(mon1) && !nameFix.includes(mon2)) {
-// 	// 	fmon1 = nameException[nameFix.indexOf(mon1)].charAt(0).toUpperCase() + nameException[nameFix.indexOf(mon1)].slice(1)
-// 	// 	fmon2 = mon2.charAt(0).toUpperCase() + mon2.slice(1)
-// 	// } else if (!nameFix.includes(mon1) && nameFix.includes(mon2)) {
-// 	// 	fmon1 = mon1.charAt(0).toUpperCase() + mon1.slice(1)
-// 	// 	fmon2 = nameException[nameFix.indexOf(mon2)].charAt(0).toUpperCase() + nameException[nameFix.indexOf(mon2)].slice(1)
-// 	// } else if (nameFix.includes(mon1) && nameFix.includes(mon2)) {
-// 	// 	let fmon1 = nameException[nameFix.indexOf(mon1)].charAt(0).toUpperCase() + nameException[nameFix.indexOf(mon1)].slice(1)
-// 	// 	let fmon2 = nameException[nameFix.indexOf(mon2)].charAt(0).toUpperCase() + nameException[nameFix.indexOf(mon2)].slice(1)
-// 	// }
-// 	//Dex Numbers
-// 	const dexnum1 = Math.floor(pokemon1.id + MAX_POKEMON * pokemon2.id)
-// 	const dexnum2 = Math.floor(pokemon2.id + MAX_POKEMON * pokemon1.id)
-// 	// Change DexNumber
-// 	dexnum1_span.innerHTML = dexnum1.toString()
-// 	dexnum2_span.innerHTML = dexnum2.toString()
-// 	fusionid1_span.innerHTML = pokemon1.id + '.' + pokemon2.id
-// 	fusionid2_span.innerHTML = pokemon2.id + '.' + pokemon1.id
-// 	//Name of fusions
-// 	fp1_div.innerHTML = pokemon1.name + ' / ' + pokemon2.name
-// 	fp2_div.innerHTML = pokemon2.name + ' / ' + pokemon1.name
-// 	//Name of pictures
-// 	const pic1 = pokemon1.id + '.' + pokemon2.id + '.png'
-// 	const pic2 = pokemon2.id + '.' + pokemon1.id + '.png'
-// 	//Stats calculation
-// 	const hp1 = pokemon1.stats[0] / 3 + 2 * (pokemon1.stats[0] / 3)
-// 	const atk1 = 2 * (pokemon2.stats[1] / 3) + pokemon1.stats[1] / 3
-// 	const def1 = 2 * (pokemon2.stats[2] / 3) + pokemon1.stats[2] / 3
-// 	const spatk1 = pokemon2.stats[3] / 3 + 2 * (pokemon1.stats[3] / 3)
-// 	const spdef1 = pokemon2.stats[4] / 3 + 2 * (pokemon1.stats[4] / 3)
-// 	const spe1 = 2 * (pokemon2.stats[5] / 3) + pokemon1.stats[5] / 3
-// 	const bs1 = Math.floor(hp1) + Math.floor(atk1) + Math.floor(def1) + Math.floor(spatk1) + Math.floor(spdef1) + Math.floor(spe1)
-// 	const hp2 = pokemon1.stats[0] / 3 + 2 * (pokemon2.stats[0] / 3)
-// 	const atk2 = 2 * (pokemon1.stats[1] / 3) + pokemon2.stats[1] / 3
-// 	const def2 = 2 * (pokemon1.stats[2] / 3) + pokemon2.stats[2] / 3
-// 	const spatk2 = pokemon1.stats[3] / 3 + 2 * (pokemon2.stats[3] / 3)
-// 	const spdef2 = pokemon1.stats[4] / 3 + 2 * (pokemon2.stats[4] / 3)
-// 	const spe2 = 2 * (pokemon1.stats[5] / 3) + pokemon2.stats[5] / 3
-// 	const bs2 = Math.floor(hp2) + Math.floor(atk2) + Math.floor(def2) + Math.floor(spatk2) + Math.floor(spdef2) + Math.floor(spe2)
-// 	const L0 = ['hp1', 'atk1', 'def1', 'spatk1', 'spdef1', 'spe1', 'bs1']
-// 	const L1 = ['hp2', 'atk2', 'def2', 'spatk2', 'spdef2', 'spe2', 'bs2']
-// 	const L2 = [Math.floor(hp1), Math.floor(atk1), Math.floor(def1), Math.floor(spatk1), Math.floor(spdef1), Math.floor(spe1), Math.floor(bs1)]
-// 	const L3 = [Math.floor(hp2), Math.floor(atk2), Math.floor(def2), Math.floor(spatk2), Math.floor(spdef2), Math.floor(spe2), Math.floor(bs2)]
-// 	const L4 = []
-// 	const L5 = []
-// 	for (const key in L0) {
-// 		L4.push(Math.max(L2[key], L3[key]) - Math.min(L2[key], L3[key]))
-// 	}
-// 	//Color of stats
-// 	for (const key in L1) {
-// 		if (L2[key] < L3[key]) {
-// 			document.getElementById(L0[key]).style.color = COLOR_RED
-// 			document.getElementById(L1[key]).style.color = COLOR_GREEN
-// 			L5.push(' (+' + L4[key] + ')')
-// 			L4[key] = ' (-' + L4[key] + ')'
-// 		} else if (L2[key] > L3[key]) {
-// 			document.getElementById(L1[key]).style.color = COLOR_RED
-// 			document.getElementById(L0[key]).style.color = COLOR_GREEN
-// 			L5.push(' (-' + L4[key] + ')')
-// 			L4[key] = ' (+' + L4[key] + ')'
-// 		} else {
-// 			document.getElementById(L1[key]).style.color = COLOR_ORANGE
-// 			document.getElementById(L0[key]).style.color = COLOR_ORANGE
-// 			L4[key] = ' (0)'
-// 			L5.push(' (0)')
-// 		}
-// 		document.getElementById(L0[key]).innerHTML = L0[key].slice(-1) + ': ' + L2[key]
-// 		document.getElementById(L1[key]).innerHTML = L1[key].slice(-1) + ': ' + L3[key]
-// 	}
-// 	//Writting stat in HTML
-// 	hp1_e.innerHTML = Math.floor(hp1) + L4[0]
-// 	atk1_e.innerHTML = Math.floor(atk1) + L4[1]
-// 	def1_e.innerHTML = Math.floor(def1) + L4[2]
-// 	spatk1_e.innerHTML = Math.floor(spatk1) + L4[3]
-// 	spdef1_e.innerHTML = Math.floor(spdef1) + L4[4]
-// 	spe1_e.innerHTML = Math.floor(spe1) + L4[5]
-// 	bs1_e.innerHTML = Math.floor(bs1) + L4[6]
-// 	hp2_e.innerHTML = Math.floor(hp2) + L5[0]
-// 	atk2_e.innerHTML = Math.floor(atk2) + L5[1]
-// 	def2_e.innerHTML = Math.floor(def2) + L5[2]
-// 	spatk2_e.innerHTML = Math.floor(spatk2) + L5[3]
-// 	spdef2_e.innerHTML = Math.floor(spdef2) + L5[4]
-// 	spe2_e.innerHTML = Math.floor(spe2) + L5[5]
-// 	bs2_e.innerHTML = Math.floor(bs2) + L5[6]
-// 	//Abilities of fused mons
-// 	if (abilitySwap.includes(pokemon1.name)) {
-// 		;[pokemon1.abilities[0], pokemon1.abilities[1]] = [pokemon1.abilities[1], pokemon1.abilities[0]]
-// 	}
-// 	if (abilitySwap.includes(pokemon2.name)) {
-// 		;[pokemon2.abilities[0], pokemon2.abilities[1]] = [pokemon2.abilities[1], pokemon2.abilities[0]]
-// 	}
-// 	//Type of fused mons
-// 	let fusion_pokemon_result1_types = null
-// 	let fusion_pokemon_result2_types = null
-// 	if (pokemon1.name === pokemon2.name && selfFusionTypeException.includes(pokemon1.name)) {
-// 		fusion_pokemon_result1_types = selfFusionTypeFix[selfFusionTypeException.indexOf(pokemon1.name)]
-// 		fusion_pokemon_result2_types = fusion_pokemon_result1_types
-// 	} else {
-// 		fusion_pokemon_result1_types = fusType(pokemon1.types, pokemon2.types)
-// 		fusion_pokemon_result2_types = fusType(pokemon2.types, pokemon1.types)
-// 	}
-// 	let typeComp = 0
-// 	//Types effectiveness
-// 	// Reset??????
-// 	if (typeComp > 0) {
-// 		const pokemon_weakness_collection = document.getElementsByClassName('monweak') as HTMLCollectionOf<HTMLDivElement>
-// 		for (const key in pokemon_weakness_collection) {
-// 			const defaultValue = pokemon_weakness_collection[key].getAttribute('data-default')
-// 			if (defaultValue) {
-// 				pokemon_weakness_collection[key].innerText = defaultValue
-// 			}
-// 		}
-// 	}
-// 	let type_effective_id1: [number, number] = typeId(fusion_pokemon_result1_types)
-// 	const type_effectiveness_array1 = new Array()
-// 	for (const key in typeName) {
-// 		type_effectiveness_array1[key] = types[key][type_effective_id1[0]] * types[key][type_effective_id1[1]]
-// 	}
-// 	for (const key in typeName) {
-// 		let image = new Image()
-// 		image.src = 'types/' + typeName[key] + '.png'
-// 		switch (type_effectiveness_array1[key]) {
-// 			case 4:
-// 				weak14_e.appendChild(image)
-// 				break
-// 			case 2:
-// 				weak12_e.appendChild(image)
-// 				break
-// 			case 1:
-// 				weak11_e.appendChild(image)
-// 				break
-// 			case 0.5:
-// 				weak105_e.appendChild(image)
-// 				break
-// 			case 0.25:
-// 				weak1025_e.appendChild(image)
-// 				break
-// 			case 0:
-// 				weak100_e.appendChild(image)
-// 				break
-// 			default:
-// 				break
-// 		}
-// 	}
-// 	type_effective_id1 = typeId(fusion_pokemon_result2_types)
-// 	const type_effectiveness_array2 = new Array()
-// 	for (const key in typeName) {
-// 		type_effectiveness_array2[key] = types[key][type_effective_id1[0]] * types[key][type_effective_id1[1]]
-// 	}
-// 	for (const key in typeName) {
-// 		let image = new Image()
-// 		image.src = 'types/' + typeName[key] + '.png'
-// 		switch (type_effectiveness_array2[key]) {
-// 			case 4:
-// 				weak24_e.appendChild(image)
-// 				break
-// 			case 2:
-// 				weak22_e.appendChild(image)
-// 				break
-// 			case 1:
-// 				weak21_e.appendChild(image)
-// 				break
-// 			case 0.5:
-// 				weak205_e.appendChild(image)
-// 				break
-// 			case 0.25:
-// 				weak2025_e.appendChild(image)
-// 				break
-// 			case 0:
-// 				weak200_e.appendChild(image)
-// 				break
-// 			default:
-// 				break
-// 		}
-// 	}
-// 	typeComp += 1
-// 	// Fusion main types
-// 	p1.src = 'types/' + fusion_pokemon_result1_types[0] + '.png'
-// 	if (fusion_pokemon_result1_types.length != 1 && fusion_pokemon_result1_types.length == 2 && fusion_pokemon_result1_types[0] != fusion_pokemon_result1_types[1]) {
-// 		p2.style.display = 'inline-block'
-// 		p2.src = 'types/' + fusion_pokemon_result1_types[1] + '.png'
-// 	} else {
-// 		p2.style.display = 'none'
-// 	}
-// 	p3.src = 'types/' + fusion_pokemon_result2_types[0] + '.png'
-// 	if (fusion_pokemon_result2_types.length != 1 && fusion_pokemon_result2_types.length == 2 && fusion_pokemon_result2_types[0] != fusion_pokemon_result2_types[1]) {
-// 		p4.style.display = 'inline-block'
-// 		p4.src = 'types/' + fusion_pokemon_result2_types[1] + '.png'
-// 	} else {
-// 		p4.style.display = 'none'
-// 	}
-// 	//Picture of fusions (if inside CustomBattlers)
-// 	showFusion('pic1', pic1, 'fusionid1')
-// 	showFusion('pic2', pic2, 'fusionid2')
-// 	//Abilities 1
-// 	let abilities1 = fusionAbilities(pokemon1.abilities, pokemon2.abilities)
-// 	let hiddenAbilities1 = fusionHiddenAbilities(pokemon1.abilities, pokemon2.abilities, abilities1)
-// 	let pokemon1_abilities = sanitizeAbilityList(abilities1)
-// 	let pokemon1_hidden_abilities = sanitizeAbilityList(hiddenAbilities1)
-// 	appendElementToList(pokemon1_abilities, ab1_e, 'ability-item')
-// 	appendElementToList(pokemon1_hidden_abilities, hab1_e, 'ability-item')
-// 	//Abilities 2
-// 	let abilties2 = fusionAbilities(pokemon2.abilities, pokemon1.abilities)
-// 	let hiddenAbilities2 = fusionHiddenAbilities(pokemon2.abilities, pokemon1.abilities, abilties2)
-// 	let pokemon2_abilities = sanitizeAbilityList(abilties2)
-// 	let hiddenAbilitiesText2 = sanitizeAbilityList(hiddenAbilities2)
-// 	appendElementToList(pokemon2_abilities, ab2_e, 'ability-item')
-// 	appendElementToList(hiddenAbilitiesText2, hab2_e, 'ability-item')
-// }
-//Custom sprite fusion function
-// async function showFusion(elementId, fusionId, elementFusionId) {
-// 	const image = getByID(elementId) as HTMLImageElement
-// 	const fusionID = getByID(elementFusionId) as HTMLSpanElement
-// 	const fusion_Url = CUSTOM_FUSION_URL + fusionId
-// 	const fallback_Fusion_Url = FALLBACK_FUSION_URL + fusionId.split('.')[0] + '/' + fusionId
-// 	const response = await fetch(fusion_Url)
-// 		.then((r) => r)
-// 		.catch((e) => console.log(e))
-// 	// @ts-ignore
-// 	if (response.ok) {
-// 		image.src = fusion_Url
-// 		fusionID.style.color = COLOR_GREEN
-// 	} else {
-// 		image.src = fallback_Fusion_Url
-// 		fusionID.style.color = COLOR_RED
-// 	}
-// }
 // Swaps the head with the body and viceversa
 // function swapPoke() {
 // 	let auxId = headId
@@ -1043,11 +912,15 @@ async function appendSrcToImage(fusionID, html_element, elementFusionID) {
 // == HELPER FUNCTIONS ========================================================================================
 // ============================================================================================================
 function conlog(msg) {
-    if (is_verbose) {
+    if (IS_VERBOSE) {
         let color = (function lol(m, s, c) {
-            return s[m.floor(m.random() * s.length)] + (c && lol(m, s, c - 1));
+            return (s[m.floor(m.random() * s.length)] +
+                (c && lol(m, s, c - 1)));
         })(Math, '789ABCDEF', 4);
-        console.log('%c[ DEBUG @ ' + new Date().toLocaleTimeString() + ' ]\n' + msg, 'color: #' + color);
+        console.log('%c[ DEBUG @ ' +
+            new Date().toLocaleTimeString() +
+            ' ]\n' +
+            msg, 'color: #' + color);
     }
 }
 function getByID(htmlId) {
@@ -1236,15 +1109,18 @@ function fusionAbilities(pokemon_head_abilities, pokemon_body_abilities) {
     let rebuilt_head_abilities;
     //If there is only one ability, pick that one
     if (pokemon_head_abilities.length === 1) {
-        rebuilt_head_abilities = pokemon_head_abilities[0]['ability']['name'];
+        rebuilt_head_abilities =
+            pokemon_head_abilities[0]['ability']['name'];
     }
     // If the second ability is a hidden ability, pick the first ability
     else if (pokemon_head_abilities[1][1] == true) {
-        rebuilt_head_abilities = pokemon_head_abilities[0]['ability']['name'];
+        rebuilt_head_abilities =
+            pokemon_head_abilities[0]['ability']['name'];
     }
     //Otherwise, actually take the second ability
     else {
-        rebuilt_head_abilities = pokemon_head_abilities[1]['ability']['name'];
+        rebuilt_head_abilities =
+            pokemon_head_abilities[1]['ability']['name'];
     }
     return [rebuilt_body_abilities, rebuilt_head_abilities];
 }
@@ -1255,11 +1131,13 @@ function fusionHiddenAbilities(pokemon_head_abilities, pokemon_body_abilities, f
     const max_abilities = 3; //Pokémons can't have more than 3 abilities
     for (let key = 0; key < max_abilities; key++) {
         if (key < pokemon_head_abilities.length) {
-            rebuilded_head_abilities = pokemon_head_abilities[key]['ability']['name'];
+            rebuilded_head_abilities =
+                pokemon_head_abilities[key]['ability']['name'];
             all_abilities.push(rebuilded_head_abilities);
         }
         if (key < pokemon_body_abilities.length) {
-            rebuilded_body_abilities = pokemon_body_abilities[key]['ability']['name'];
+            rebuilded_body_abilities =
+                pokemon_body_abilities[key]['ability']['name'];
             all_abilities.push(rebuilded_body_abilities);
         }
     }

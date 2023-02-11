@@ -1,112 +1,52 @@
-indexMax = ids.length
-baseURL = "https://pokeapi.co/api/v2/pokemon/"
-analyzed = 0
-firstError = true
-document.getElementById("loading").style.color = "orange"
-
-for(var i=0; i<indexMax; i++){
-  var element = ids[i][0].toLowerCase()
-  url_A = baseURL + element
-  url_B = baseURL + element + "/" 
-  urlExists(url_A, someCallback)
-  urlExists(url_B, someCallback)
-}
-
-
-function urlExists(url, callback){
-  $.ajax({
-    type: 'HEAD',
-    url: url,
-    success: function(){
-      callback(url, true);
-    },
-    error: function() {
-      callback(url, false);
-    }
-  });
-}
-
-
-function someCallback(url, isSuccess){
-    if(isSuccess){
-      // console.log(url)
-    }
-    else{
-      console.error(url)
-      if(firstError){
-        firstError = false;
-        link = "<a href=\"" + url + "\">" + url + "</a>"
-      }
-      else{
-        link = "<br><a href=\"" + url + "\">" + url + "</a>"
-      }
-      content = document.getElementById("results").innerHTML;
-      document.getElementById("results").innerHTML = content + link
-    }
-
-    analyzed = analyzed + 1;
-    progress = 100*analyzed/(indexMax*2)
-    text = parseInt(progress) + " %";
-    document.getElementById("loading").innerHTML = text
-
-    if(progress==100){
-      document.getElementById("loading").style.color = "green"
+import { ids } from '../script/infiniteFusionData.js';
+const INDEX_MAX = ids.length;
+const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
+let ANALYZED = 0;
+const content = document.getElementById('results');
+const loading = document.getElementById('loading');
+const checker_btn = document.getElementById('checker');
+loading.style.color = 'orange';
+checker_btn.addEventListener('click', function () {
+    startAPICheck();
+});
+function startAPICheck() {
+    loading.innerHTML = '0%';
+    for (var i = 0; i < INDEX_MAX; i++) {
+        let element = ids[i][0].toString().toLowerCase();
+        const url_A = BASE_URL + element;
+        const url_B = BASE_URL + element + '/';
+        urlExists(url_A, someCallback);
+        urlExists(url_B, someCallback);
     }
 }
-
-
-
-/*
-function testAPI() {
-    console.log("START")
-    baseURL = "https://pokeapi.co/api/v2/pokemon/"
-    startIndex = 1
-    endIndex = 898
-    for(index = startIndex; index <= endIndex; index++){
-        url_A = baseURL + index
-        url_B = baseURL + index + "/" 
-        urlExists(url_A, someCallback)
-        urlExists(url_B, someCallback)
-        // console.info(index)
+async function urlExists(url, callback) {
+    const response = await fetch(url)
+        .then((r) => r)
+        .catch((e) => console.log(e));
+    // @ts-ignore
+    if (response.ok) {
+        callback(url, true);
     }
-    console.log("END")
+    else {
+        callback(url, false);
+    }
 }
-
-testAPI()
-*/
-
-
-
-/*
-minPoke = 0
-maxPoke = 420
-
-function random(){
-
-  var rand = Math.floor(Math.random() * Math.floor(maxPoke));
-  // console.log(rand)
-  
-  if(dict[rand]==undefined){
-  	dict[rand] = 1
-  }
-  else{
-   dict[rand] = dict[rand] + 1
-  }
+function someCallback(url, isSuccess) {
+    const new_span = document.createElement('span');
+    if (isSuccess) {
+        new_span.innerHTML = '[ OK ] ' + url;
+        new_span.style.color = 'lightgreen';
+    }
+    else {
+        new_span.innerText = '[ ER ] ' + url;
+        new_span.style.color = 'lightcoral';
+    }
+    content.appendChild(new_span);
+    ANALYZED++;
+    let progress = parseFloat(((100 * ANALYZED) / (INDEX_MAX * 2)).toFixed(2));
+    let text = progress + ' %';
+    document.getElementById('loading').innerHTML = text;
+    if (progress == 100) {
+        document.getElementById('loading').style.color = 'green';
+    }
 }
-
-iterationSize = maxPoke * maxPoke
-dict = {}
-
-for(var i = 0; i < iterationSize; i++){
-	random()
-}
-console.log(dict)
-
-
-console.log("MISSING :")
-for(var j = minPoke; j <= maxPoke; j++){
-	if(dict[j]==undefined){
-  	console.log(j)
-  }
-}
-*/
