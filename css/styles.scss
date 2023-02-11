@@ -217,6 +217,10 @@ main {
         display: block;
     }
 
+    .notice-container {
+        min-width: 300px;
+    }
+
     .main-container {
         display  : flex;
         flex-flow: row nowrap;
