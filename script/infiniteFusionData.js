@@ -1,74 +1,371 @@
 //#region Stats
 //Aegislash
-const aegislashStats = [{ base_stat: 60 }, { base_stat: 50 }, { base_stat: 150 }, { base_stat: 50 }, { base_stat: 150 }, { base_stat: 60 }];
+const aegislashStats = [
+    { base_stat: 60 },
+    { base_stat: 50 },
+    { base_stat: 150 },
+    { base_stat: 50 },
+    { base_stat: 150 },
+    { base_stat: 60 },
+];
 //Butterfree
-const butterfreeStats = [{ base_stat: 60 }, { base_stat: 45 }, { base_stat: 50 }, { base_stat: 80 }, { base_stat: 80 }, { base_stat: 70 }];
+const butterfreeStats = [
+    { base_stat: 60 },
+    { base_stat: 45 },
+    { base_stat: 50 },
+    { base_stat: 80 },
+    { base_stat: 80 },
+    { base_stat: 70 },
+];
 //Beedrill
-const beedrillStats = [{ base_stat: 65 }, { base_stat: 80 }, { base_stat: 40 }, { base_stat: 45 }, { base_stat: 80 }, { base_stat: 75 }];
+const beedrillStats = [
+    { base_stat: 65 },
+    { base_stat: 80 },
+    { base_stat: 40 },
+    { base_stat: 45 },
+    { base_stat: 80 },
+    { base_stat: 75 },
+];
 //Pidgeot
-const pidgeotStats = [{ base_stat: 83 }, { base_stat: 80 }, { base_stat: 75 }, { base_stat: 70 }, { base_stat: 70 }, { base_stat: 91 }];
+const pidgeotStats = [
+    { base_stat: 83 },
+    { base_stat: 80 },
+    { base_stat: 75 },
+    { base_stat: 70 },
+    { base_stat: 70 },
+    { base_stat: 91 },
+];
 //Pikachu
-const pikachuStats = [{ base_stat: 35 }, { base_stat: 55 }, { base_stat: 30 }, { base_stat: 50 }, { base_stat: 40 }, { base_stat: 90 }];
+const pikachuStats = [
+    { base_stat: 35 },
+    { base_stat: 55 },
+    { base_stat: 30 },
+    { base_stat: 50 },
+    { base_stat: 40 },
+    { base_stat: 90 },
+];
 //Raichu
-const raichuStats = [{ base_stat: 60 }, { base_stat: 90 }, { base_stat: 55 }, { base_stat: 90 }, { base_stat: 80 }, { base_stat: 100 }];
+const raichuStats = [
+    { base_stat: 60 },
+    { base_stat: 90 },
+    { base_stat: 55 },
+    { base_stat: 90 },
+    { base_stat: 80 },
+    { base_stat: 100 },
+];
 //Nidoqueen
-const nidoqueenStats = [{ base_stat: 90 }, { base_stat: 82 }, { base_stat: 87 }, { base_stat: 75 }, { base_stat: 85 }, { base_stat: 76 }];
+const nidoqueenStats = [
+    { base_stat: 90 },
+    { base_stat: 82 },
+    { base_stat: 87 },
+    { base_stat: 75 },
+    { base_stat: 85 },
+    { base_stat: 76 },
+];
 //Nidoking
-const nidokingStats = [{ base_stat: 81 }, { base_stat: 92 }, { base_stat: 77 }, { base_stat: 85 }, { base_stat: 75 }, { base_stat: 85 }];
+const nidokingStats = [
+    { base_stat: 81 },
+    { base_stat: 92 },
+    { base_stat: 77 },
+    { base_stat: 85 },
+    { base_stat: 75 },
+    { base_stat: 85 },
+];
 //Clefable
-const clefableStats = [{ base_stat: 95 }, { base_stat: 70 }, { base_stat: 73 }, { base_stat: 85 }, { base_stat: 90 }, { base_stat: 60 }];
+const clefableStats = [
+    { base_stat: 95 },
+    { base_stat: 70 },
+    { base_stat: 73 },
+    { base_stat: 85 },
+    { base_stat: 90 },
+    { base_stat: 60 },
+];
 //Wigglytuff
-const wigglytuffStats = [{ base_stat: 140 }, { base_stat: 70 }, { base_stat: 45 }, { base_stat: 75 }, { base_stat: 50 }, { base_stat: 45 }];
+const wigglytuffStats = [
+    { base_stat: 140 },
+    { base_stat: 70 },
+    { base_stat: 45 },
+    { base_stat: 75 },
+    { base_stat: 50 },
+    { base_stat: 45 },
+];
 //Vileplume
-const vileplumeStats = [{ base_stat: 75 }, { base_stat: 80 }, { base_stat: 85 }, { base_stat: 100 }, { base_stat: 90 }, { base_stat: 50 }];
+const vileplumeStats = [
+    { base_stat: 75 },
+    { base_stat: 80 },
+    { base_stat: 85 },
+    { base_stat: 100 },
+    { base_stat: 90 },
+    { base_stat: 50 },
+];
 //Poliwrath
-const poliwrathStats = [{ base_stat: 90 }, { base_stat: 85 }, { base_stat: 95 }, { base_stat: 70 }, { base_stat: 90 }, { base_stat: 70 }];
+const poliwrathStats = [
+    { base_stat: 90 },
+    { base_stat: 85 },
+    { base_stat: 95 },
+    { base_stat: 70 },
+    { base_stat: 90 },
+    { base_stat: 70 },
+];
 //Alakazam
-const alakazamStats = [{ base_stat: 55 }, { base_stat: 50 }, { base_stat: 45 }, { base_stat: 135 }, { base_stat: 85 }, { base_stat: 120 }];
+const alakazamStats = [
+    { base_stat: 55 },
+    { base_stat: 50 },
+    { base_stat: 45 },
+    { base_stat: 135 },
+    { base_stat: 85 },
+    { base_stat: 120 },
+];
 //Victreebel
-const victreebelStats = [{ base_stat: 80 }, { base_stat: 105 }, { base_stat: 65 }, { base_stat: 100 }, { base_stat: 60 }, { base_stat: 70 }];
+const victreebelStats = [
+    { base_stat: 80 },
+    { base_stat: 105 },
+    { base_stat: 65 },
+    { base_stat: 100 },
+    { base_stat: 60 },
+    { base_stat: 70 },
+];
 //Golem
-const golemStats = [{ base_stat: 80 }, { base_stat: 110 }, { base_stat: 130 }, { base_stat: 55 }, { base_stat: 65 }, { base_stat: 45 }];
+const golemStats = [
+    { base_stat: 80 },
+    { base_stat: 110 },
+    { base_stat: 130 },
+    { base_stat: 55 },
+    { base_stat: 65 },
+    { base_stat: 45 },
+];
 //Ampharos
-const ampharosStats = [{ base_stat: 90 }, { base_stat: 75 }, { base_stat: 75 }, { base_stat: 115 }, { base_stat: 90 }, { base_stat: 55 }];
+const ampharosStats = [
+    { base_stat: 90 },
+    { base_stat: 75 },
+    { base_stat: 75 },
+    { base_stat: 115 },
+    { base_stat: 90 },
+    { base_stat: 55 },
+];
 //Bellossom
-const bellossomStats = [{ base_stat: 75 }, { base_stat: 80 }, { base_stat: 85 }, { base_stat: 90 }, { base_stat: 100 }, { base_stat: 50 }];
+const bellossomStats = [
+    { base_stat: 75 },
+    { base_stat: 80 },
+    { base_stat: 85 },
+    { base_stat: 90 },
+    { base_stat: 100 },
+    { base_stat: 50 },
+];
 //Azumarill
-const azumarillStats = [{ base_stat: 100 }, { base_stat: 50 }, { base_stat: 80 }, { base_stat: 50 }, { base_stat: 80 }, { base_stat: 50 }];
+const azumarillStats = [
+    { base_stat: 100 },
+    { base_stat: 50 },
+    { base_stat: 80 },
+    { base_stat: 50 },
+    { base_stat: 80 },
+    { base_stat: 50 },
+];
 //Jumpluff
-const jumpluffStats = [{ base_stat: 75 }, { base_stat: 55 }, { base_stat: 70 }, { base_stat: 55 }, { base_stat: 85 }, { base_stat: 110 }];
+const jumpluffStats = [
+    { base_stat: 75 },
+    { base_stat: 55 },
+    { base_stat: 70 },
+    { base_stat: 55 },
+    { base_stat: 85 },
+    { base_stat: 110 },
+];
 //Roserade
-const roseradeStats = [{ base_stat: 60 }, { base_stat: 70 }, { base_stat: 55 }, { base_stat: 125 }, { base_stat: 105 }, { base_stat: 90 }];
+const roseradeStats = [
+    { base_stat: 60 },
+    { base_stat: 70 },
+    { base_stat: 55 },
+    { base_stat: 125 },
+    { base_stat: 105 },
+    { base_stat: 90 },
+];
 //Krookodile
-const krookodileStats = [{ base_stat: 95 }, { base_stat: 117 }, { base_stat: 70 }, { base_stat: 65 }, { base_stat: 70 }, { base_stat: 92 }];
+const krookodileStats = [
+    { base_stat: 95 },
+    { base_stat: 117 },
+    { base_stat: 70 },
+    { base_stat: 65 },
+    { base_stat: 70 },
+    { base_stat: 92 },
+];
 //Magcargo
-const magcargoStats = [{ base_stat: 50 }, { base_stat: 50 }, { base_stat: 120 }, { base_stat: 80 }, { base_stat: 80 }, { base_stat: 30 }];
+const magcargoStats = [
+    { base_stat: 50 },
+    { base_stat: 50 },
+    { base_stat: 120 },
+    { base_stat: 80 },
+    { base_stat: 80 },
+    { base_stat: 30 },
+];
 //Arbok
-const arbokStats = [{ base_stat: 60 }, { base_stat: 85 }, { base_stat: 69 }, { base_stat: 65 }, { base_stat: 79 }, { base_stat: 80 }];
+const arbokStats = [
+    { base_stat: 60 },
+    { base_stat: 85 },
+    { base_stat: 69 },
+    { base_stat: 65 },
+    { base_stat: 79 },
+    { base_stat: 80 },
+];
 //Ariados
-const ariadosStats = [{ base_stat: 70 }, { base_stat: 90 }, { base_stat: 70 }, { base_stat: 60 }, { base_stat: 60 }, { base_stat: 40 }];
+const ariadosStats = [
+    { base_stat: 70 },
+    { base_stat: 90 },
+    { base_stat: 70 },
+    { base_stat: 60 },
+    { base_stat: 60 },
+    { base_stat: 40 },
+];
 //Mantine
-const mantineStats = [{ base_stat: 65 }, { base_stat: 40 }, { base_stat: 70 }, { base_stat: 80 }, { base_stat: 140 }, { base_stat: 70 }];
+const mantineStats = [
+    { base_stat: 65 },
+    { base_stat: 40 },
+    { base_stat: 70 },
+    { base_stat: 80 },
+    { base_stat: 140 },
+    { base_stat: 70 },
+];
 //Electrode
-const electrodeStats = [{ base_stat: 60 }, { base_stat: 50 }, { base_stat: 70 }, { base_stat: 80 }, { base_stat: 80 }, { base_stat: 140 }];
+const electrodeStats = [
+    { base_stat: 60 },
+    { base_stat: 50 },
+    { base_stat: 70 },
+    { base_stat: 80 },
+    { base_stat: 80 },
+    { base_stat: 140 },
+];
 //Dodrio
-const dodrioStats = [{ base_stat: 60 }, { base_stat: 110 }, { base_stat: 70 }, { base_stat: 60 }, { base_stat: 60 }, { base_stat: 100 }];
+const dodrioStats = [
+    { base_stat: 60 },
+    { base_stat: 110 },
+    { base_stat: 70 },
+    { base_stat: 60 },
+    { base_stat: 60 },
+    { base_stat: 100 },
+];
 //Noctowl
-const noctowlStats = [{ base_stat: 100 }, { base_stat: 50 }, { base_stat: 50 }, { base_stat: 76 }, { base_stat: 96 }, { base_stat: 70 }];
+const noctowlStats = [
+    { base_stat: 100 },
+    { base_stat: 50 },
+    { base_stat: 50 },
+    { base_stat: 76 },
+    { base_stat: 96 },
+    { base_stat: 70 },
+];
 //Qwilfish
-const qwilfishStats = [{ base_stat: 65 }, { base_stat: 95 }, { base_stat: 75 }, { base_stat: 55 }, { base_stat: 55 }, { base_stat: 85 }];
+const qwilfishStats = [
+    { base_stat: 65 },
+    { base_stat: 95 },
+    { base_stat: 75 },
+    { base_stat: 55 },
+    { base_stat: 55 },
+    { base_stat: 85 },
+];
 //Dugtrio
-const dugtrioStats = [{ base_stat: 35 }, { base_stat: 80 }, { base_stat: 50 }, { base_stat: 50 }, { base_stat: 70 }, { base_stat: 120 }];
+const dugtrioStats = [
+    { base_stat: 35 },
+    { base_stat: 80 },
+    { base_stat: 50 },
+    { base_stat: 50 },
+    { base_stat: 70 },
+    { base_stat: 120 },
+];
 //Farfetchd
-const farfetchdStats = [{ base_stat: 52 }, { base_stat: 65 }, { base_stat: 55 }, { base_stat: 58 }, { base_stat: 62 }, { base_stat: 60 }];
+const farfetchdStats = [
+    { base_stat: 52 },
+    { base_stat: 65 },
+    { base_stat: 55 },
+    { base_stat: 58 },
+    { base_stat: 62 },
+    { base_stat: 60 },
+];
 //Corsola
-const corsolaStats = [{ base_stat: 55 }, { base_stat: 55 }, { base_stat: 85 }, { base_stat: 65 }, { base_stat: 85 }, { base_stat: 35 }];
+const corsolaStats = [
+    { base_stat: 55 },
+    { base_stat: 55 },
+    { base_stat: 85 },
+    { base_stat: 65 },
+    { base_stat: 85 },
+    { base_stat: 35 },
+];
 //Exeggutor
-const exeggutorStats = [{ base_stat: 95 }, { base_stat: 95 }, { base_stat: 85 }, { base_stat: 125 }, { base_stat: 65 }, { base_stat: 55 }];
+const exeggutorStats = [
+    { base_stat: 95 },
+    { base_stat: 95 },
+    { base_stat: 85 },
+    { base_stat: 125 },
+    { base_stat: 65 },
+    { base_stat: 55 },
+];
 //Input
-const statsException = ['aegislash-shield', 'butterfree', 'beedrill', 'pidgeot', 'pikachu', 'raichu', 'nidoqueen', 'nidoking', 'clefable', 'wigglytuff', 'vileplume', 'poliwrath', 'alakazam', 'victreebel', 'golem', 'ampharos', 'bellossom', 'azumarill', 'jumpluff', 'roserade', 'magcargo', 'arbok', 'ariados', 'mantine', 'electrode', 'dodrio', 'noctowl', 'qwilfish', 'dugtrio', 'farfetchd', 'corsola', 'exeggutor'];
+const statsException = [
+    'aegislash-shield',
+    'butterfree',
+    'beedrill',
+    'pidgeot',
+    'pikachu',
+    'raichu',
+    'nidoqueen',
+    'nidoking',
+    'clefable',
+    'wigglytuff',
+    'vileplume',
+    'poliwrath',
+    'alakazam',
+    'victreebel',
+    'golem',
+    'ampharos',
+    'bellossom',
+    'azumarill',
+    'jumpluff',
+    'roserade',
+    'magcargo',
+    'arbok',
+    'ariados',
+    'mantine',
+    'electrode',
+    'dodrio',
+    'noctowl',
+    'qwilfish',
+    'dugtrio',
+    'farfetchd',
+    'corsola',
+    'exeggutor',
+];
 //Output
-const statsFix = [aegislashStats, butterfreeStats, beedrillStats, pidgeotStats, pikachuStats, raichuStats, nidoqueenStats, nidokingStats, clefableStats, wigglytuffStats, vileplumeStats, poliwrathStats, alakazamStats, victreebelStats, golemStats, ampharosStats, bellossomStats, azumarillStats, jumpluffStats, roseradeStats, magcargoStats, arbokStats, ariadosStats, mantineStats, electrodeStats, dodrioStats, noctowlStats, qwilfishStats, dugtrioStats, farfetchdStats, corsolaStats, exeggutorStats];
+const statsFix = [
+    aegislashStats,
+    butterfreeStats,
+    beedrillStats,
+    pidgeotStats,
+    pikachuStats,
+    raichuStats,
+    nidoqueenStats,
+    nidokingStats,
+    clefableStats,
+    wigglytuffStats,
+    vileplumeStats,
+    poliwrathStats,
+    alakazamStats,
+    victreebelStats,
+    golemStats,
+    ampharosStats,
+    bellossomStats,
+    azumarillStats,
+    jumpluffStats,
+    roseradeStats,
+    magcargoStats,
+    arbokStats,
+    ariadosStats,
+    mantineStats,
+    electrodeStats,
+    dodrioStats,
+    noctowlStats,
+    qwilfishStats,
+    dugtrioStats,
+    farfetchdStats,
+    corsolaStats,
+    exeggutorStats,
+];
 //#endregion
 //#region Abilities
 //Chandelure
@@ -463,14 +760,136 @@ const clefableAbilities = [
     },
 ];
 //Input
-const abilitiesException = ['chandelure', 'lampent', 'litwick', 'wigglytuff', 'jigglypuff', 'igglybuff', 'zapdos', 'raikou', 'entei', 'suicune', 'milotic', 'feebas', 'gengar', 'weezing', 'koffing', 'mewtwo', 'unown', 'flygon', 'regigigas', 'darkrai', 'genesect', 'reshiram', 'zekrom', 'kyurem', 'ferrothorn', 'talonflame', 'hydreigon', 'cleffa', 'clefairy', 'clefable'];
+const abilitiesException = [
+    'chandelure',
+    'lampent',
+    'litwick',
+    'wigglytuff',
+    'jigglypuff',
+    'igglybuff',
+    'zapdos',
+    'raikou',
+    'entei',
+    'suicune',
+    'milotic',
+    'feebas',
+    'gengar',
+    'weezing',
+    'koffing',
+    'mewtwo',
+    'unown',
+    'flygon',
+    'regigigas',
+    'darkrai',
+    'genesect',
+    'reshiram',
+    'zekrom',
+    'kyurem',
+    'ferrothorn',
+    'talonflame',
+    'hydreigon',
+    'cleffa',
+    'clefairy',
+    'clefable',
+];
 //Output
-const abilitiesFix = [chandelureAbilities, lampentAbilities, litwickAbilities, wigglytuffAbilities, jigglypuffAbilities, igglybuffAbilities, zapdosAbilities, raikouAbilities, enteiAbilities, suicuneAbilities, miloticAbilities, feebasAbilities, gengarAbilities, weezingAbilities, koffingAbilities, mewtwoAbilities, unownAbilities, flygonAbilities, regigigasAbilities, darkraiAbilities, genesectAbilities, reshiramAbilities, zekromAbilities, kyuremAbilities, ferrothornAbilities, talonflameAbilities, hydreigonAbilities, cleffaAbilities, clefairyAbilities, clefableAbilities];
+const abilitiesFix = [
+    chandelureAbilities,
+    lampentAbilities,
+    litwickAbilities,
+    wigglytuffAbilities,
+    jigglypuffAbilities,
+    igglybuffAbilities,
+    zapdosAbilities,
+    raikouAbilities,
+    enteiAbilities,
+    suicuneAbilities,
+    miloticAbilities,
+    feebasAbilities,
+    gengarAbilities,
+    weezingAbilities,
+    koffingAbilities,
+    mewtwoAbilities,
+    unownAbilities,
+    flygonAbilities,
+    regigigasAbilities,
+    darkraiAbilities,
+    genesectAbilities,
+    reshiramAbilities,
+    zekromAbilities,
+    kyuremAbilities,
+    ferrothornAbilities,
+    talonflameAbilities,
+    hydreigonAbilities,
+    cleffaAbilities,
+    clefairyAbilities,
+    clefableAbilities,
+];
 //Swap
-const abilitySwap = ['pidgey', 'pidgeotto', 'pidgeot', 'ekans', 'arbok', 'diglett', 'dugtrio', 'growlithe', 'arcanine', 'machop', 'machoke', 'machamp', 'geodude', 'graveler', 'golem', 'farfetchd', 'onix', 'steelix', 'krabby', 'kingler', 'voltorb', 'electrode', 'cubone', 'marowak', 'hitmonchan', 'lapras', 'snorlax', 'aerodactyl', 'chinchou', 'lanturn', 'marill', 'azumarill', 'dunsparce', 'murkrow', 'honchkrow', 'snubbull', 'granbull', 'teddiursa', 'ursaring', 'absol'];
+const abilitySwap = [
+    'pidgey',
+    'pidgeotto',
+    'pidgeot',
+    'ekans',
+    'arbok',
+    'diglett',
+    'dugtrio',
+    'growlithe',
+    'arcanine',
+    'machop',
+    'machoke',
+    'machamp',
+    'geodude',
+    'graveler',
+    'golem',
+    'farfetchd',
+    'onix',
+    'steelix',
+    'krabby',
+    'kingler',
+    'voltorb',
+    'electrode',
+    'cubone',
+    'marowak',
+    'hitmonchan',
+    'lapras',
+    'snorlax',
+    'aerodactyl',
+    'chinchou',
+    'lanturn',
+    'marill',
+    'azumarill',
+    'dunsparce',
+    'murkrow',
+    'honchkrow',
+    'snubbull',
+    'granbull',
+    'teddiursa',
+    'ursaring',
+    'absol',
+];
 // #endregion
 //#region Types
-const typeName = ['normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'];
+const typeName = [
+    'normal',
+    'fire',
+    'water',
+    'electric',
+    'grass',
+    'ice',
+    'fighting',
+    'poison',
+    'ground',
+    'flying',
+    'psychic',
+    'bug',
+    'rock',
+    'ghost',
+    'dragon',
+    'dark',
+    'steel',
+    'fairy',
+];
 const typeSwap = [
     ['steel', 'electric', 'Magnemite'],
     ['steel', 'electric', 'Magneton'],
@@ -483,7 +902,6 @@ const typeSwap = [
     ['dark', 'ghost', 'Spiritomb'],
     ['steel', 'grass', 'Ferrothorn'],
     ['grass', 'psychic', 'Celebi'],
-    ['flying', 'flying', 'Fletchinder'],
 ];
 const typeUni = [
     ['grass', 'Bulbasaur'],
@@ -505,8 +923,24 @@ const typeUni = [
     ['dragon', 'Dragonite'],
     ['steel', 'Steelix'],
 ];
-const selfFusionTypeException = ['pinsir', 'ampharos', 'lopunny', 'sceptile', 'gyarados', 'aggron'];
-const selfFusionTypeFix = [['bug', 'flying'], ['electric', 'dragon'], ['normal', 'fighting'], ['grass', 'dragon'], ['water', 'dark'], ['steel']];
+const selfFusionTypeException = [
+    'pinsir',
+    'ampharos',
+    'lopunny',
+    'sceptile',
+    'gyarados',
+    'aggron',
+    'groudon',
+];
+const selfFusionTypeFix = [
+    ['bug', 'flying'],
+    ['electric', 'dragon'],
+    ['normal', 'fighting'],
+    ['grass', 'dragon'],
+    ['water', 'dark'],
+    ['steel'],
+    ['ground', 'fire'],
+];
 const types = new Array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5, 0, 1, 1, 0.5, 1, 1], // Normal
 [1, 0.5, 0.5, 1, 2, 2, 1, 1, 1, 1, 1, 2, 0.5, 1, 0.5, 1, 2, 1, 1], // Fire
 [1, 2, 0.5, 1, 0.5, 1, 1, 1, 2, 1, 1, 1, 2, 1, 0.5, 1, 1, 1, 1], // Water
@@ -529,8 +963,36 @@ const types = new Array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5, 0, 1, 1, 0.5, 
 );
 //#endregion
 //#region FixTables
-const nameException = ['deoxys', 'giratina', 'mimikyu', 'aegislash', 'mimejr', 'mrmime', 'nidoranm', 'nidoranf', 'porygonz', 'hooh', 'hoho', 'ohho', 'ohoh'];
-const nameFix = ['deoxys-normal', 'giratina-altered', 'mimikyu-disguised', 'aegislash-shield', 'mime-jr', 'mr-mime', 'nidoran-m', 'nidoran-f', 'porygon-z', 'ho-oh', 'ho-oh', 'ho-oh', 'ho-oh'];
+const nameException = [
+    'deoxys',
+    'giratina',
+    'mimikyu',
+    'aegislash',
+    'mimejr',
+    'mrmime',
+    'nidoranm',
+    'nidoranf',
+    'porygonz',
+    'hooh',
+    'hoho',
+    'ohho',
+    'ohoh',
+];
+const nameFix = [
+    'deoxys-normal',
+    'giratina-altered',
+    'mimikyu-disguised',
+    'aegislash-shield',
+    'mime-jr',
+    'mr-mime',
+    'nidoran-m',
+    'nidoran-f',
+    'porygon-z',
+    'ho-oh',
+    'ho-oh',
+    'ho-oh',
+    'ho-oh',
+];
 const ids = [
     ['bulbasaur', 1],
     ['ivysaur', 2],
