@@ -2,153 +2,269 @@ var result1 = new Array();
 var result2 = new Array();
 var typeComp = 0;
 
-var mon1, mon2;
+let pokemon1, pokemon2;
 var num1, num2;
 var mon1stats, mon2stats;
 var mon1types, mon2types;
 var mon1abilities, mon2abilities;
 var jsonBody;
 
+const MAX_POKE = 420
+const POKEAPI_URL = 'https://pokeapi.co/api/v2/pokemon/'
+
+// HTML Elements
+const pk1Els = {
+	$fname: $('#fname1'),
+
+	$type1: $('#p1'),
+	$type2: $('#p2'),
+	$image: $('#pic1'),
+
+	$dexNum: $('#dexnumber1'),
+	$fusionID: $('#fusionid1'),
+	$fusionName: $('#FP1'),
+
+	$hp: $('#hp1'),
+	$atk: $('#atk1'),
+	$def: $('#def1'),
+	$spatk: $('#spatk1'),
+	$spdef: $('#spdef1'),
+	$spe: $('#spe1'),
+
+	$total: $('#bs1'),
+	$abilities: $('#ab1'),
+	$hiddenAbilities: $('#hab1'),
+
+	$weak4: $('#weak14'),
+	$weak2: $('#weak12'),
+	$weak1: $('#weak11'),
+	$weak05: $('#weak105'),
+	$weak025: $('#weak1025'),
+	$weak0: $('#weak100'),
+}
+
+const pk2Els = {
+	$fname: $('#fname2'),
+
+	$type1: $('#p3'),
+	$type2: $('#p4'),
+	$image: $('#pic2'),
+
+	$dexNum: $('#dexnumber2'),
+	$fusionID: $('#fusionid2'),
+	$fusionName: $('#FP2'),
+
+	$hp: $('#hp2'),
+	$atk: $('#atk2'),
+	$def: $('#def2'),
+	$spatk: $('#spatk2'),
+	$spdef: $('#spdef2'),
+	$spe: $('#spe2'),
+
+	$total: $('#bs2'),
+	$abilities: $('#ab2'),
+	$hiddenAbilities: $('#hab2'),
+
+	$weak4: $('#weak24'),
+	$weak2: $('#weak22'),
+	$weak1: $('#weak21'),
+	$weak05: $('#weak205'),
+	$weak025: $('#weak2025'),
+	$weak0: $('#weak200'),
+}
+
+const random_btn = $('#random')
+const random1_btn = $('#random1')
+const random2_btn = $('#random2')
+const reset_btn = $('#reset')
+const fuse_btn = $('#fuse')
+
 //Adding options to datalist
-var box1 = document.getElementById('fname1');
-var box2 = document.getElementById('fname2');
-var dl = document.createElement('datalist');
-dl.id = 'dlPkmn';
+// Always better to wrap everything in a function
+populateDatalist()
+function populateDatalist() {
+	const datalist = $('#dlPkmn')
 
-for (var i=0 ; i < ids.length; i += 1) {
-    var option = document.createElement('option');
-    //Special name case
-    if (nameFix.includes(ids[i][0].toLowerCase())) {
-        var val = nameException[nameFix.indexOf(ids[i][0].toLowerCase())]
-        option.value = val[0].toUpperCase() + val.substring(1)
-    }
-    else {
-        option.value = ids[i][0];
-    }
-    dl.appendChild(option);
+	for (const item in ids) {
+		const newOption = document.createElement('option')
+		const pokemon = ids[item][0].toString().toLowerCase()	// Make completely sure that we're dealing with strings before lowercasing it
+
+		//Special name case
+		if (nameFix.includes(pokemon)) {
+			const name = nameException[nameFix.indexOf(pokemon)]
+			newOption.value = name.charAt(0).toUpperCase() + name.substring(1)
+		} else {
+			newOption.value = pokemon.charAt(0).toUpperCase() + pokemon.substring(1)
+		}
+
+		datalist[0].appendChild(newOption)
+	}
 }
-box1.appendChild(dl);
-box2.appendChild(dl);
 
+// =====================
+// == EVENT LISTENERS ==
+// =====================
 
-//Press ENTER on text area 1
-var pkmn1 = document.getElementById('fname1');
-pkmn1.addEventListener("keydown", function(event) {
-    if (event.keyCode === 13) {
+// Press ENTER on text area 1
+pk1Els.$fname[0].addEventListener('keydown', event => {
+    if (event.key === 'Enter') {
         event.preventDefault();
-        document.getElementById("button").click();
+        fusePoke()
     }
 });
 
-
-//Press ENTER on text area 2
-var pkmn2 = document.getElementById('fname2');
-pkmn2.addEventListener("keydown", function(event) {
-    if (event.keyCode === 13) {
+// Press ENTER to text area 2
+pk2Els.$fname[0].addEventListener('keydown', event => {
+    if (event.key === 'Enter') {
         event.preventDefault();
-        document.getElementById("button").click();
+		fusePoke()
     }
 });
 
+random_btn[0].addEventListener('click', () => {
+    randomPoke(true, true)
+})
 
-//Empty pokemon text area
+reset_btn[0].addEventListener('click', () => {
+    resetPoke()
+})
+
+fuse_btn[0].addEventListener('click', () => {
+    fusePoke()
+})
+
+random1_btn[0].addEventListener('click', () => {
+    randomPoke(true, false)
+})
+
+random2_btn[0].addEventListener('click', () => {
+    randomPoke(false, true)
+})
+
+// ====================
+// == MAIN FUNCTIONS ==
+// ====================
+
+// Reset Pokemon's Data
 function resetPoke() {
-    document.getElementById("fname1").value = null;
-    document.getElementById("fname2").value = null;
-    document.getElementById("p1").src = "types/unknown.png";
-    document.getElementById("p2").style = "display:none";
-    document.getElementById("p3").src = "types/unknown.png";
-    document.getElementById("p4").style = "display:none";
-    document.getElementById("pic1").src = "question.png";
-    document.getElementById("pic2").src = "question.png";
+	pk1Els.$fname[0].value = ''
+	pk2Els.$fname[0].value = ''
 
-    document.getElementById("dexnumber1").innerHTML = "&nbsp;";
-    document.getElementById("dexnumber2").innerHTML = "&nbsp;";
-    document.getElementById("fusionid1").innerHTML = "&nbsp;";
-    document.getElementById("fusionid2").innerHTML = "&nbsp;";
-    document.getElementById("FP1").innerHTML = "mon1/mon2";
-    document.getElementById("FP2").innerHTML = "mon2/mon1";
+	pk1Els.$type1[0].src = 'types/unknown.png'
+	pk1Els.$type2[0].src = 'types/unknown.png'
+	pk1Els.$type2[0].style.display = 'none'
+	pk2Els.$type1[0].src = 'types/unknown.png'
+	pk2Els.$type2[0].src = 'types/unknown.png'
+	pk2Els.$type2[0].style.display = 'none'
 
-    document.getElementById("hp1").innerHTML = "HP: ";
-    document.getElementById("atk1").innerHTML = "ATK: ";
-    document.getElementById("def1").innerHTML = "DEF: ";
-    document.getElementById("spatk1").innerHTML = "SPE.ATK: ";
-    document.getElementById("spdef1").innerHTML = "SPE.DEF: ";
-    document.getElementById("spe1").innerHTML = "SPEED: ";
-    document.getElementById("bs1").innerHTML = "TOTAL: ";
-    document.getElementById("ab1").innerHTML = "ABILITY:";
-    document.getElementById("hab1").innerHTML = "";
+	pk1Els.$image[0].src = 'question.png'
+	pk2Els.$image[0].src = 'question.png'
 
-    document.getElementById("hp2").innerHTML = "HP: ";
-    document.getElementById("atk2").innerHTML = "ATK: ";
-    document.getElementById("def2").innerHTML = "DEF: ";
-    document.getElementById("spatk2").innerHTML = "SPE.ATK: ";
-    document.getElementById("spdef2").innerHTML = "SPE.DEF: ";
-    document.getElementById("spe2").innerHTML = "SPEED: ";
-    document.getElementById("bs2").innerHTML = "TOTAL: ";
-    document.getElementById("ab2").innerHTML = "ABILITY:";
-    document.getElementById("hab2").innerHTML = "";
+	pk1Els.$dexNum[0].innerHTML = '\u00A0'
+	pk2Els.$dexNum[0].innerHTML = '\u00A0'
+	pk1Els.$fusionID[0].innerHTML = ' '
+	pk2Els.$fusionID[0].innerHTML = ' '
+	pk1Els.$fusionName[0].innerHTML = 'Pokemon 1 / Pokemon 2'
+	pk2Els.$fusionName[0].innerHTML = 'Pokemon 2 / Pokemon 1'
 
-    document.getElementById("weak14").innerHTML = "x4: ";
-    document.getElementById("weak12").innerHTML = "x2: ";
-    document.getElementById("weak11").innerHTML = "x1: "; 
-    document.getElementById("weak105").innerHTML = "x0.5: ";
-    document.getElementById("weak1025").innerHTML = "x0.25: ";
-    document.getElementById("weak100").innerHTML = "x0: ";
+	pk1Els.$hp[0].innerHTML = 'HP:'
+	pk1Els.$atk[0].innerHTML = 'ATK:'
+	pk1Els.$def[0].innerHTML = 'DEF:'
+	pk1Els.$spatk[0].innerHTML = 'SP.ATK:'
+	pk1Els.$spdef[0].innerHTML = 'SP.DEF:'
+	pk1Els.$spe[0].innerHTML = 'SPEED:'
+	pk1Els.$total[0].innerHTML = 'TOTAL:'
+	pk1Els.$abilities[0].innerHTML = 'ABILITY:'
+	pk1Els.$hiddenAbilities[0].innerHTML = ''
 
-    document.getElementById("weak24").innerHTML = "x4: ";
-    document.getElementById("weak22").innerHTML = "x2: ";
-    document.getElementById("weak21").innerHTML = "x1: "; 
-    document.getElementById("weak205").innerHTML = "x0.5: ";
-    document.getElementById("weak2025").innerHTML = "x0.25: ";
-    document.getElementById("weak200").innerHTML = "x0: ";
+	pk2Els.$hp[0].innerHTML = 'HP:'
+	pk2Els.$atk[0].innerHTML = 'ATK:'
+	pk2Els.$def[0].innerHTML = 'DEF:'
+	pk2Els.$spatk[0].innerHTML = 'SP.ATK:'
+	pk2Els.$spdef[0].innerHTML = 'SP.DEF:'
+	pk2Els.$spe[0].innerHTML = 'SPEED:'
+	pk2Els.$total[0].innerHTML = 'TOTAL:'
+	pk2Els.$abilities[0].innerHTML = 'ABILITY:'
+	pk2Els.$hiddenAbilities[0].innerHTML = ''
 
-    var L0 = ["hp1","atk1","def1","spatk1","spdef1","spe1","bs1"];
-    var L1 = ["hp2","atk2","def2","spatk2","spdef2","spe2","bs2"];
-    for (var i = 0; i < L0.length; i++) {
-        document.getElementById(L0[i]).style.color = "";
-        document.getElementById(L1[i]).style.color = "";
-    }
+	pk1Els.$weak4[0].innerHTML = 'x4:'
+	pk1Els.$weak2[0].innerHTML = 'x2:'
+	pk1Els.$weak1[0].innerHTML = 'x1:'
+	pk1Els.$weak05[0].innerHTML = 'x0.5:'
+	pk1Els.$weak025[0].innerHTML = 'x0.25:'
+	pk1Els.$weak0[0].innerHTML = 'x0:'
+
+	pk2Els.$weak4[0].innerHTML = 'x4:'
+	pk2Els.$weak2[0].innerHTML = 'x2:'
+	pk2Els.$weak1[0].innerHTML = 'x1:'
+	pk2Els.$weak05[0].innerHTML = 'x0.5:'
+	pk2Els.$weak025[0].innerHTML = 'x0.25:'
+	pk2Els.$weak0[0].innerHTML = 'x0:'
+
+	const base1 = ['hp1', 'atk1', 'def1', 'spatk1', 'spdef1', 'spe1', 'bs1']
+	const base2 = ['hp2', 'atk2', 'def2', 'spatk2', 'spdef2', 'spe2', 'bs2']
+	for (const id in base1) {
+		document.getElementById(base1[id]).style.color = ''
+		document.getElementById(base2[id]).style.color = ''
+	}
 }
-
-
-function getRandomPokeID(){
-    maxPoke = 420
-    return Math.floor(Math.random() * Math.floor(maxPoke));
-}
-
-
-function randomBothPoke() {randomPoke(true, true)}
-function randomFirstPoke() {randomPoke(true, false)}
-function randomSecondPoke() {randomPoke(false, true)}
-
 
 function randomPoke(should_rand1, should_rand2) {
-    buttons = document.getElementsByClassName("button");
-    for (let i = 0; i < buttons.length; i++) {
-        buttons[i].disabled = true;
-    };
+	disableButtons()
 
-    if(should_rand1 || num1 == undefined) {rand1 = getRandomPokeID();}
-    else{rand1 = num1 - 1;}
-    if(should_rand2 || num2 == undefined) {rand2 = getRandomPokeID();}
-    else{rand2 = num2 - 1;}
+	if (should_rand1) {
+		const name = ids[getRandomPokeID()][0].toString().toLowerCase()
+		pk1Els.$fname[0].value = checkName(name)
+	}
 
-    var name = ids[rand1][0].toLowerCase();
-    if (nameFix.includes(name)) {
-        name = nameException[nameFix.indexOf(name)];
-    }
-    document.getElementById("fname1").value = name
+	if (should_rand2) {
+		const name = ids[getRandomPokeID()][0].toString().toLowerCase()
+		pk2Els.$fname[0].value = checkName(name)
+	}
 
-    var name2 = ids[rand2][0].toLowerCase();
-    if (nameFix.includes(name2)) {
-        name2 = nameException[nameFix.indexOf(name2)];
-    }
-    document.getElementById("fname2").value = name2
+	// Fires only when both pokemons are present
+	if (pk1Els.$fname[0].value && pk2Els.$fname[0].value) {
+		fusePoke()
+	} else {
+		enableButtons()
+	}
 
-    fusePoke()
+	/**
+	 * Local function that checks whether the name is included in the nameFix array
+	 * @param {string} name
+	 * @returns string
+	 */
+	function checkName(name) {
+		if (nameFix.includes(name)) {
+			name = nameException[nameFix.indexOf(name)]
+		}
+		return name
+	}
 }
 
+// ======================
+// == HELPER FUNCTIONS ==
+// ======================
+
+function getRandomPokeID(){
+    return Math.floor(Math.random() * Math.floor(MAX_POKE));
+}
+
+function disableButtons() {
+    const buttons_collection = $('.button')
+
+    for (const elem in buttons_collection) {
+        buttons_collection[elem].disabled = true
+    }
+}
+
+function enableButtons() {
+	const buttons_collection = $('.button')
+
+	for (const elem in buttons_collection) {
+		buttons_collection[elem].disabled = false
+	}
+}
 
 function getPokemonName(htmlId){
     var pokemonName = (document.getElementById(htmlId)).value.toLowerCase();
@@ -156,83 +272,143 @@ function getPokemonName(htmlId){
     return pokemonName;
 }
 
-
 //Fusion calculation function
-function fusePoke() {
+async function fusePoke() {
+	disableButtons()
 
-    //Pokemon from both text area
-    mon1 = getPokemonName("fname1");
-    mon2 = getPokemonName("fname2");
+	// Copy pokemon from both text area
+	pokemon1 = pk1Els.$fname[0].value.toString().toLowerCase()
+	pokemon2 = pk2Els.$fname[0].value.toString().toLowerCase()
 
-    if (isMissingNames(mon1, mon2)) {
-        buttons = document.getElementsByClassName("button");
-    for (let i = 0; i < buttons.length; i++) {
-        buttons[i].disabled = false;
-    };
-        alert("Please fill the two text inputs!");
+	if (!pokemon1 || !pokemon2) {
+		enableButtons()
+		alert('Please fill out the textboxes!')
+		return
+	}
+
+	// idCheck
+	// Nidoran clause
+	if (pokemon1 == 'nidoran' || pokemon2 == 'nidoran') {
+		alert("Please specify Nidoran's gender! (f or m)")
+		return
+	}
+
+	// Special mon selector: Giratina, Deoxys
+	pokemon1 = checkName(pokemon1)
+	pokemon2 = checkName(pokemon2)
+
+    // Fetch Pokemon's data from PokeAPI
+    const poke1_res = await fetch(POKEAPI_URL + pokemon1.toString().toLowerCase())
+        .then(response => response.json())
+        .catch((error) => {
+            console.log(error)
+            alert('PokeAPI is unreachable!')
+        })
+
+    const poke2_res = await fetch(POKEAPI_URL + pokemon2)
+		.then((response) => response.json())
+		.catch((error) => {
+			console.log(error)
+			alert('PokeAPI is unreachable!')
+		})
+
+    // Build pokemon's data
+    buildPokemon(poke1_res, pokemon1)
+    buildPokemon(poke2_res, pokemon2)
+
+    enableButtons()
+
+	/**
+	 * Local function that checks if pokemon is in nameException
+	 * @param {string} name
+	 * @returns string
+	 */
+	function checkName(name) {
+		if (nameException.includes(name)) {
+			name = nameFix[nameException.indexOf(name)]
+		}
+
+		return name
+	}
+}
+
+/**
+ * build the pokemon
+ * @param {json} pokemonData 
+ */
+function buildPokemon (pokemonData, pokemonName) {
+    let pokemonID = pokemonData.id
+
+    // ID Check
+    let IDCheck = false
+
+    for (const item in ids) {
+        const pokemon = ids[item][0].toString().toLowerCase()
+        if (pokemonName === pokemon) {
+            IDCheck = true
+            pokemonID = ids[item][1]
+        }
     }
 
-    // TODO : test if poke is in fangame
-    // idCheck
+    // Check if the pokemon is in the fangame!
+    if (IDCheck === false || pokemonID >= MAX_POKE) {
+        alert(pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.substring(1) + ' isn\'t in the fangame!')
+        return
+    }
 
-    else {
+    // ==============================
+    // START OF BUILDING POKEMON DATA
+    // ==============================
 
-        // Nidoran clause
-        if(mon1=="nidoran" || mon2 =="nidoran"){
-            alert("Please specify a gender to Nidoran (f or m)");
+    // Types
+    let fetched_types = pokemonData.types
+    const pokemon_types = []
+    let compt = 0
+
+    // Exceptions for pokemons with swapped types
+    for (const i in typeSwap) {
+        const ID_pokemon = typeSwap[i][2].toString().toLowerCase()
+
+        if (ID_pokemon === pokemonName) {
+            pokemon_types.push(typeSwap[i][0].toString())
+            pokemon_types.push(typeSwap[i][1].toString())
+            compt = 1
         }
-        else{
+    }
 
-            //Special mon selector: Giratina, Deoxys
-            if (nameException.includes(mon1)) {
-                mon1 = nameFix[nameException.indexOf(mon1)];
-            }
+    // Exception for pokemons with single type
+    for (const i in typeUni) {
+        const ID_pokemon = typeUni[i][1].toString().toLowerCase()
 
-            if (nameException.includes(mon2)) {
-                mon2 = nameFix[nameException.indexOf(mon2)];
-            }
+        if (ID_pokemon === pokemonName) {
+            pokemon_types.push(typeUni[i][0].toString())
+            compt = 2
+        }
+    }
 
-            // First request - version A
-            var xhr1a = new XMLHttpRequest();
-            var url1a = "https://pokeapi.co/api/v2/pokemon/" + mon1;
-            xhr1a.open('GET', url1a, true);
-            xhr1a.send();
-            xhr1a.onload = function() {
-                jsonBody = xhr1a.responseText;
-                if(jsonBody) {
-                    if(jsonBody != "Not Found"){
-                        jp = JSON.parse(jsonBody);
-                        fuseFirstPoke(jp);
-                    }
-                    else{
+    if (compt === 0) {
+        for (const type in fetched_types) {
+            const typeName = fetched_types[type]['type']['name']
 
-                        //First request - version B
-                        var xhr1b = new XMLHttpRequest();
-                        var url1b = "https://pokeapi.co/api/v2/pokemon/" + mon1 + "/";
-                        xhr1b.open('GET', url1b, true);
-                        xhr1b.send();
-                        xhr1b.onload = function() {
-                            jsonBody = xhr1b.responseText;
-                            if(jsonBody) {
-                                if(jsonBody != "Not Found"){
-                                    jp = JSON.parse(jsonBody);
-                                    fuseFirstPoke(jp);
-                                }
-                                else{
-                                    alert("First pokemon was misspelled ?");
-                                }
-                            }
-                            else{
-                                alert("PokeAPI is unreachable (1b)");
-                            }
-                        }
-                    }
-                }
-                else{
-                    alert("PokeAPI is unreachable (1a)");
-                }
+            if (typeName === 'normal' || typeName === 'flying') {
+                pokemon_types.push('flying')
+            } else {
+                pokemon_types.push(typeName)
             }
         }
+    }
+
+    // Stats
+    let pokemon_stats
+
+    if (statsException.includes(pokemonName)) {
+        pokemon_stats = statsFix[statsException.indexOf(pokemonName)]
+    } else {
+        pokemon_stats = pokemonData.stats
+    }
+
+    for (const stat in pokemon_stats) {
+        // TODO
     }
 }
 
@@ -244,7 +420,7 @@ function fuseFirstPoke(jsonString){
     var id1 = num1;
     var idCheck1 = false;
     for (var i = 0; i < ids.length; i++){
-        if (ids[i][0] == mon1.charAt(0).toUpperCase() + mon1.slice(1)) {
+        if (ids[i][0] == pokemon1.charAt(0).toUpperCase() + pokemon1.slice(1)) {
             idCheck1 = true;
             num1 = ids[i][1];
         }
@@ -262,7 +438,7 @@ function fuseFirstPoke(jsonString){
 
         //Exception mon selected for swapped types
         for (var i = 0; i < typeSwap.length; i++) {
-            if (typeSwap[i][2] == mon1.charAt(0).toUpperCase() + mon1.slice(1)) {
+            if (typeSwap[i][2] == pokemon1.charAt(0).toUpperCase() + pokemon1.slice(1)) {
                 mon1types.push(typeSwap[i][0]);
                 mon1types.push(typeSwap[i][1]);
                 var compt = 1;
@@ -271,7 +447,7 @@ function fuseFirstPoke(jsonString){
 
         //Exception mon selected for one type
         for (var i = 0; i < typeUni.length; i++) {
-            if (typeUni[i][1] == mon1.charAt(0).toUpperCase() + mon1.slice(1)) {
+            if (typeUni[i][1] == pokemon1.charAt(0).toUpperCase() + pokemon1.slice(1)) {
                 mon1types.push(typeUni[i][0]);
                 var compt = 2;
             }
@@ -291,8 +467,8 @@ function fuseFirstPoke(jsonString){
 
         //#region Stats of 1st mon
         var stats1;
-        if (statsException.includes(mon1)) {
-            stats1 = statsFix[statsException.indexOf(mon1)];
+        if (statsException.includes(pokemon1)) {
+            stats1 = statsFix[statsException.indexOf(pokemon1)];
         } else {
             stats1 = jsonString.stats;
         }
@@ -305,8 +481,8 @@ function fuseFirstPoke(jsonString){
 
         //#region Abilities of 1st mon
         var ab1;
-        if (abilitiesException.includes(mon1)) {
-            ab1 = abilitiesFix[abilitiesException.indexOf(mon1)];
+        if (abilitiesException.includes(pokemon1)) {
+            ab1 = abilitiesFix[abilitiesException.indexOf(pokemon1)];
         } else {
             ab1 = jsonString.abilities;
         }
@@ -319,7 +495,7 @@ function fuseFirstPoke(jsonString){
         //#region Request
         // Second request - version A
         var xhr2a = new XMLHttpRequest();
-        var url2a = "https://pokeapi.co/api/v2/pokemon/" + mon2;
+        var url2a = "https://pokeapi.co/api/v2/pokemon/" + pokemon2;
         xhr2a.open('GET', url2a, true);
         xhr2a.send();
         xhr2a.onload = function() {
@@ -333,7 +509,7 @@ function fuseFirstPoke(jsonString){
 
                     // Second request - version B
                     var xhr2b = new XMLHttpRequest();
-                    var url2b = "https://pokeapi.co/api/v2/pokemon/" + mon2 + "/";
+                    var url2b = "https://pokeapi.co/api/v2/pokemon/" + pokemon2 + "/";
                     xhr2b.open('GET', url2b, true);
                     xhr2b.send();
                     xhr2b.onload = function() {
@@ -370,7 +546,7 @@ function fuseSecondPoke(jsonString){
     var id2 = num2;
     var idCheck2 = false;
     for (var i = 0; i < ids.length; i++){
-        if (ids[i][0] == mon2.charAt(0).toUpperCase() + mon2.slice(1)) {
+        if (ids[i][0] == pokemon2.charAt(0).toUpperCase() + pokemon2.slice(1)) {
             idCheck2 = true;
             num2 = ids[i][1];
         }
@@ -388,7 +564,7 @@ function fuseSecondPoke(jsonString){
 
         //Exception mon selected for swapped types
         for (var i = 0; i < typeSwap.length; i++) {
-            if (typeSwap[i][2] == mon2.charAt(0).toUpperCase() + mon2.slice(1)) {
+            if (typeSwap[i][2] == pokemon2.charAt(0).toUpperCase() + pokemon2.slice(1)) {
                 mon2types.push(typeSwap[i][0]);
                 mon2types.push(typeSwap[i][1]);
                 var compt = 1;
@@ -397,7 +573,7 @@ function fuseSecondPoke(jsonString){
 
         //Exception mon selected for one type
         for (var i = 0; i < typeUni.length; i++) {
-            if (typeUni[i][1] == mon2.charAt(0).toUpperCase() + mon2.slice(1)) {
+            if (typeUni[i][1] == pokemon2.charAt(0).toUpperCase() + pokemon2.slice(1)) {
                 mon2types.push(typeUni[i][0]);
                 var compt = 2;
             }
@@ -418,8 +594,8 @@ function fuseSecondPoke(jsonString){
 
         //#region Stats of 2nd mon
         var stats2;
-        if (statsException.includes(mon2)) {
-            stats2 = statsFix[statsException.indexOf(mon2)];
+        if (statsException.includes(pokemon2)) {
+            stats2 = statsFix[statsException.indexOf(pokemon2)];
         } else {
             stats2 = jsonString.stats;
         }
@@ -431,8 +607,8 @@ function fuseSecondPoke(jsonString){
 
         //#region Abilities of 2nd mon
         var ab2;
-        if (abilitiesException.includes(mon2)) {
-            ab2 = abilitiesFix[abilitiesException.indexOf(mon2)];
+        if (abilitiesException.includes(pokemon2)) {
+            ab2 = abilitiesFix[abilitiesException.indexOf(pokemon2)];
         } else {
             ab2 = jsonString.abilities;
         }
@@ -454,18 +630,18 @@ function fuseBothPoke(){
 
     //TODO : factor this
     //Name of fusion
-    if (!nameFix.includes(mon1) && !nameFix.includes(mon2)) {
-        var fmon1 = mon1.charAt(0).toUpperCase() + mon1.slice(1);
-        var fmon2 = mon2.charAt(0).toUpperCase() + mon2.slice(1);
-    } else if (nameFix.includes(mon1) && !nameFix.includes(mon2)) {
-        var fmon1 = nameException[nameFix.indexOf(mon1)].charAt(0).toUpperCase() + nameException[nameFix.indexOf(mon1)].slice(1);
-        var fmon2 = mon2.charAt(0).toUpperCase() + mon2.slice(1);
-    } else if (!nameFix.includes(mon1) && nameFix.includes(mon2)) {
-        var fmon1 = mon1.charAt(0).toUpperCase() + mon1.slice(1);
-        var fmon2 = nameException[nameFix.indexOf(mon2)].charAt(0).toUpperCase() + nameException[nameFix.indexOf(mon2)].slice(1);
-    } else if (nameFix.includes(mon1) && nameFix.includes(mon2)) {
-        var fmon1 = nameException[nameFix.indexOf(mon1)].charAt(0).toUpperCase() + nameException[nameFix.indexOf(mon1)].slice(1);
-        var fmon2 = nameException[nameFix.indexOf(mon2)].charAt(0).toUpperCase() + nameException[nameFix.indexOf(mon2)].slice(1);
+    if (!nameFix.includes(pokemon1) && !nameFix.includes(pokemon2)) {
+        var fmon1 = pokemon1.charAt(0).toUpperCase() + pokemon1.slice(1);
+        var fmon2 = pokemon2.charAt(0).toUpperCase() + pokemon2.slice(1);
+    } else if (nameFix.includes(pokemon1) && !nameFix.includes(pokemon2)) {
+        var fmon1 = nameException[nameFix.indexOf(pokemon1)].charAt(0).toUpperCase() + nameException[nameFix.indexOf(pokemon1)].slice(1);
+        var fmon2 = pokemon2.charAt(0).toUpperCase() + pokemon2.slice(1);
+    } else if (!nameFix.includes(pokemon1) && nameFix.includes(pokemon2)) {
+        var fmon1 = pokemon1.charAt(0).toUpperCase() + pokemon1.slice(1);
+        var fmon2 = nameException[nameFix.indexOf(pokemon2)].charAt(0).toUpperCase() + nameException[nameFix.indexOf(pokemon2)].slice(1);
+    } else if (nameFix.includes(pokemon1) && nameFix.includes(pokemon2)) {
+        var fmon1 = nameException[nameFix.indexOf(pokemon1)].charAt(0).toUpperCase() + nameException[nameFix.indexOf(pokemon1)].slice(1);
+        var fmon2 = nameException[nameFix.indexOf(pokemon2)].charAt(0).toUpperCase() + nameException[nameFix.indexOf(pokemon2)].slice(1);
     }
 
     //Dex Numbers
@@ -565,18 +741,18 @@ function fuseBothPoke(){
     document.getElementById("bs2").innerHTML = "TOTAL: " + Math.floor(bs2) + L5[6];
 
     //Abilities of fused mons
-    if (abilitySwap.includes(mon1)) {
+    if (abilitySwap.includes(pokemon1)) {
         [mon1abilities[0], mon1abilities[1]] = [mon1abilities[1], mon1abilities[0]];
     }
-    if (abilitySwap.includes(mon2)) {
+    if (abilitySwap.includes(pokemon2)) {
         [mon2abilities[0], mon2abilities[1]] = [mon2abilities[1], mon2abilities[0]];
     }
 
     //Type of fused mons
     var fmonres1 = null;
     var fmonres2 = null;
-    if(mon1 == mon2 && selfFusionTypeException.includes(mon1)){
-        fmonres1 = selfFusionTypeFix[selfFusionTypeException.indexOf(mon1)];
+    if(pokemon1 == pokemon2 && selfFusionTypeException.includes(pokemon1)){
+        fmonres1 = selfFusionTypeFix[selfFusionTypeException.indexOf(pokemon1)];
         fmonres2 = fmonres1
     }
     else{
